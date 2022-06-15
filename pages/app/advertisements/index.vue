@@ -1,8 +1,11 @@
 <template>
   <div>
     <title-bar :title-stack="titleStack" />
-    <hero-bar :has-right-visible="false">
+    <hero-bar>
       Advertisements
+      <nuxt-link slot="right" to="/app/advertisements/create" class="button is-primary">
+        Create an Advertisement
+      </nuxt-link>
     </hero-bar>
   </div>
 </template>

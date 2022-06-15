@@ -45,11 +45,11 @@ export default {
             label: 'Profile',
             icon: 'account-circle'
           },
-          {
-            to: '/login',
-            label: 'Login',
-            icon: 'lock'
-          },
+          // {
+          //   to: '/login',
+          //   label: 'Login',
+          //   icon: 'lock'
+          // },
         ],
       ]
     }
