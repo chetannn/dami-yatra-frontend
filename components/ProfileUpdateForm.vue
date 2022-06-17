@@ -11,6 +11,11 @@
       <b-field horizontal label="E-mail" message="Required. Your e-mail">
         <b-input v-model="form.email" name="email" type="email" required />
       </b-field>
+
+         <b-field horizontal label="Mobile" message="Your mobile">
+        <b-input v-model="form.mobile" name="mobile" type="text" />
+      </b-field>
+
       <hr />
       <b-field horizontal>
         <div class="control">
@@ -19,7 +24,7 @@
             class="button is-primary"
             :class="{ 'is-loading': isLoading }"
           >
-            Submit
+            Update Profile
           </button>
         </div>
       </b-field>
@@ -43,20 +48,29 @@ export default {
       form: {
         name: this.$auth.user.name,
         email: this.$auth.user.email,
+        mobile: ''
       },
     }
   },
   methods: {
-    submit() {
+    async submit() {
       this.isLoading = true
-      setTimeout(() => {
-        this.isLoading = false
-        this.$store.commit('user', this.form)
-        this.$buefy.snackbar.open({
-          message: 'Updated',
+      try {
+          await this.$axios.get('/sanctum/csrf-cookie')
+          await this.$axios.post('/api/update-profile', this.form)
+
+          this.$buefy.snackbar.open({
+          message: 'Your profile has been updated',
           queue: false,
-        })
-      }, 500)
+          }, 200)
+             this.isLoading = false
+
+      }
+      catch(e) {
+           this.isLoading = true
+           throw e
+      }
+    
     },
   },
 }

@@ -7,8 +7,8 @@
         message="Required. Your current password"
       >
         <b-input
-          v-model="form.password_current"
-          name="password_current"
+          v-model="form.current_password"
+          name="current_password"
           type="password"
           required
           autcomplete="current-password"
@@ -45,7 +45,7 @@
             class="button is-primary"
             :class="{ 'is-loading': isLoading }"
           >
-            Submit
+            Change Password
           </button>
         </div>
       </b-field>
@@ -64,25 +64,29 @@ export default {
     return {
       isLoading: false,
       form: {
-        password_current: null,
+        current_password: null,
         password: null,
         password_confirmation: null,
       },
     }
   },
   methods: {
-    submit() {
-      this.isLoading = true
-      setTimeout(() => {
-        this.isLoading = false
-        this.$buefy.snackbar.open(
-          {
-            message: 'Updated',
-            queue: false,
-          },
-          500
-        )
-      })
+   async submit() {
+        this.isLoading = true
+      try {
+          await this.$axios.get('/sanctum/csrf-cookie')
+          await this.$axios.put('/api/user/password', this.form)
+
+          this.$buefy.snackbar.open({
+          message: 'Your password has been changed',
+          queue: false,
+          }, 200)
+             this.isLoading = false
+      }
+      catch(e) {
+           this.isLoading = true
+           throw e
+      }
     },
   },
 }

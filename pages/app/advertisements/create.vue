@@ -10,36 +10,26 @@
     <section class="section is-main-section">
       <card-component title="Advertisement" icon="ballot">
         <form @submit.prevent="submit">
-          <b-field label="Title" horizontal>
 
-            <b-field>
+            <b-field label="Title" horizontal>
               <b-input
                 v-model="form.title"
                 icon="account"
-                placeholder="Name"
-                name="name"
+                placeholder="Title"
+                name="title"
                 required
               />
             </b-field>
 
-          </b-field>
-
-          <b-field label="Subject" message="Message subject" horizontal>
-            <b-input
-              v-model="form.subject"
-              placeholder="e.g. Partnership proposal"
-              required
-            />
-          </b-field>
           <b-field
             label="Description"
             message="Your description. Max 255 characters"
             horizontal
           >
             <b-input
-              v-model="form.question"
+              v-model="form.description"
               type="textarea"
-              placeholder="Explain how we can help you"
+              placeholder="Description of the advertisement"
               maxlength="255"
               required
             />
@@ -58,24 +48,31 @@
             <file-picker v-model="customElementsForm.file" />
           </b-field>
 
+           <b-field label="Tags" horizontal>
+            <b-taginput
+                ellipsis
+                v-model="form.tags"
+                icon="label"
+                placeholder="Add a tag"
+                aria-close-label="Delete this tag">
+            </b-taginput>
+        </b-field>
+
+           <b-field label="Publish" horizontal>
+            <b-switch v-model="form.is_published">
+            </b-switch>
+        </b-field>
 
           <hr />
           <b-field horizontal>
             <b-field grouped>
               <div class="control">
                 <b-button native-type="submit" type="is-primary"
-                >Submit</b-button
-                >
-              </div>
-              <div class="control">
-                <b-button type="is-primary is-outlined" @click="reset"
-                >Reset</b-button
+                >Save</b-button
                 >
               </div>
             </b-field>
           </b-field>
-
-
 
         </form>
       </card-component>
@@ -108,11 +105,10 @@ export default {
       isLoading: false,
       form: {
         title: null,
-        email: null,
-        phone: null,
-        department: null,
-        subject: null,
-        question: null,
+        description: null,
+        is_published: false,
+        tags: [],
+        ad_end_date: '2022-04-05'
       },
       customElementsForm: {
         checkbox: [],
@@ -125,11 +121,29 @@ export default {
   },
   computed: {
     titleStack() {
-      return ['Admin', 'Forms']
+      return ['Vendor', 'Advertisement', 'Create']
     },
   },
   methods: {
-    submit() {},
+   async submit() {
+       this.isLoading = true
+     try {
+          await this.$axios.get('/sanctum/csrf-cookie')
+          await this.$axios.post('/api/vendor/advertisements', this.form)
+            this.$buefy.snackbar.open({
+              message: 'Advertisement created successfully',
+              queue: false,
+         }, 2000)
+
+         this.$router.push('/app/advertisements')
+     }
+
+     catch(e) {
+         this.isLoading = true
+         throw e
+     }
+
+    },
     reset() {
       this.form = mapValues(this.form, (item) => {
         if (item && typeof item === 'object') {
@@ -145,7 +159,7 @@ export default {
   },
   head() {
     return {
-      title: 'Forms — Admin One Nuxt.js',
+      title: 'Add Advertisement',
     }
   },
 }
