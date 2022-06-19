@@ -73,6 +73,7 @@
 import CardComponent from '@/components/CardComponent.vue'
 
 export default {
+  middleware: 'guest',
   name: 'Login',
   components: { CardComponent },
   data () {

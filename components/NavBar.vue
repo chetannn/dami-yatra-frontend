@@ -45,7 +45,7 @@
       <div class="navbar-end">
 
         <nav-bar-menu class="has-divider has-user-avatar">
-          <user-avatar />
+          <user-avatar :avatar="$auth.user.profile_picture_url" />
           <div class="is-user-name">
             <span>{{ $auth.user.name }}</span>
           </div>
@@ -55,7 +55,7 @@
             class="navbar-dropdown"
           >
             <nuxt-link
-              to="/profile"
+              to="/app/profile"
               class="navbar-item"
               exact-active-class="is-active"
             >
@@ -81,7 +81,7 @@
               <span>Messages</span>
             </a>
             <hr class="navbar-divider">
-            <a class="navbar-item">
+            <a @click.prevent="logout" class="navbar-item">
               <b-icon
                 icon="logout"
                 custom-size="default"

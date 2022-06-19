@@ -35,11 +35,11 @@ export default {
             icon: 'table',
             // updateMark: true
           },
-          {
-            to: '/forms',
-            label: 'Forms',
-            icon: 'square-edit-outline'
-          },
+          // {
+          //   to: '/forms',
+          //   label: 'Forms',
+          //   icon: 'square-edit-outline'
+          // },
           {
             to: '/app/profile',
             label: 'Profile',

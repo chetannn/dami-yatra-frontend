@@ -14,6 +14,7 @@ import HeroBar from '@/components/HeroBar'
 
 export default {
   name: 'IndexPage',
+  middleware: ['auth', 'verified'],
   layout: 'app',
   components: {
     TitleBar,

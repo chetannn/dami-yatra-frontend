@@ -1,9 +1,19 @@
 <template>
   <card-component title="Edit Profile" icon="account-circle">
     <form @submit.prevent="submit">
-      <b-field horizontal label="Avatar">
-        <file-picker />
+      <b-field class="file is-primary" :class="{'has-name': !!form.profile_picture}" horizontal label="Avatar">
+          <b-upload v-model="form.profile_picture" class="file-label">
+            <span class="file-cta">
+                <b-icon class="file-icon" icon="upload"></b-icon>
+                <span class="file-label">Choose Avatar</span>
+            </span>
+            <span class="file-name" v-if="form.profile_picture">
+                {{ form.profile_picture.name }}
+            </span>
+          </b-upload>
       </b-field>
+
+
       <hr />
       <b-field horizontal label="Name" message="Required. Your name">
         <b-input v-model="form.name" name="name" required />
@@ -46,9 +56,10 @@ export default {
       isFileUploaded: false,
       isLoading: false,
       form: {
-        name: this.$auth.user.name,
+        name: '',
         email: this.$auth.user.email,
-        mobile: ''
+        mobile: '',
+        profile_picture: null
       },
     }
   },
@@ -57,12 +68,28 @@ export default {
       this.isLoading = true
       try {
           await this.$axios.get('/sanctum/csrf-cookie')
-          await this.$axios.post('/api/update-profile', this.form)
+
+        let name = this.form.name
+        let formData = new FormData()
+        formData.append('name', name)
+
+        if(this.form.profile_picture) {
+          formData.append('profile_picture', this.form.profile_picture)
+        }
+
+        const response = await this.$axios.post('/api/update-profile', formData, {
+          headers:  {
+                  'Content-Type': 'multipart/form-data'
+                },
+        })
 
           this.$buefy.snackbar.open({
           message: 'Your profile has been updated',
           queue: false,
           }, 200)
+
+        this.$auth.setUser(response.data)
+
              this.isLoading = false
 
       }
@@ -70,8 +97,11 @@ export default {
            this.isLoading = true
            throw e
       }
-    
+
     },
   },
+  mounted() {
+    this.form.name = this.$auth.user.name
+  }
 }
 </script>

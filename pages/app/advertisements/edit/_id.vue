@@ -2,7 +2,7 @@
   <div>
     <title-bar :title-stack="titleStack" />
     <hero-bar>
-       Create Advertisement
+      Edit Advertisement
       <nuxt-link slot="right" to="/" class="button">
         Dashboard
       </nuxt-link>
@@ -11,15 +11,15 @@
       <card-component title="Advertisement" icon="ballot">
         <form @submit.prevent="submit">
 
-            <b-field label="Title" horizontal>
-              <b-input
-                v-model="form.title"
-                icon="account"
-                placeholder="Title"
-                name="title"
-                required
-              />
-            </b-field>
+          <b-field label="Title" horizontal>
+            <b-input
+              v-model="form.title"
+              icon="account"
+              placeholder="Title"
+              name="title"
+              required
+            />
+          </b-field>
 
           <b-field
             label="Description"
@@ -48,27 +48,27 @@
             <file-picker v-model="form.itinerary_file" />
           </b-field>
 
-           <b-field label="Tags" horizontal>
+          <b-field label="Tags" horizontal>
             <b-taginput
-                ellipsis
-                v-model="form.tags"
-                icon="label"
-                placeholder="Add a tag"
-                aria-close-label="Delete this tag">
+              ellipsis
+              v-model="form.tags"
+              icon="label"
+              placeholder="Add a tag"
+              aria-close-label="Delete this tag">
             </b-taginput>
-        </b-field>
+          </b-field>
 
-           <b-field label="Publish" horizontal>
+          <b-field label="Publish" horizontal>
             <b-switch v-model="form.is_published">
             </b-switch>
-        </b-field>
+          </b-field>
 
           <hr />
           <b-field horizontal>
             <b-field grouped>
               <div class="control">
                 <b-button native-type="submit" type="is-primary"
-                >Save</b-button
+                >Update Advertisement</b-button
                 >
               </div>
             </b-field>
@@ -90,7 +90,6 @@ import HeroBar from '@/components/HeroBar'
 
 export default {
   layout: 'app',
-  name: 'Forms',
   components: {
     HeroBar,
     FilePicker,
@@ -120,40 +119,45 @@ export default {
   },
   computed: {
     titleStack() {
-      return ['Vendor', 'Advertisement', 'Create']
+      return ['Vendor', 'Advertisement', 'Edit']
     },
   },
   methods: {
-   async submit() {
-       this.isLoading = true
-     try {
+    async submit() {
+      try {
+        this.isLoading = true
+        await this.$axios.get('/sanctum/csrf-cookie')
+        await this.$axios.put('/api/vendor/advertisements/' + this.$route.params.id , this.form)
 
-          await this.$axios.get('/sanctum/csrf-cookie')
+        this.$buefy.snackbar.open({
+          message: 'Advertisement updated successfully',
+          queue: false,
+        }, 2000)
 
-           // let formData = new FormData()
-           // formData.append('file', file)
+        this.$router.push('/app/advertisements')
+      }
 
-          await this.$axios.post('/api/vendor/advertisements', this.form)
-            this.$buefy.snackbar.open({
-              message: 'Advertisement created successfully',
-              queue: false,
-         }, 2000)
-
-         this.$router.push('/app/advertisements')
-     }
-
-     catch(e) {
-         this.isLoading = true
-         throw e
-     }
+      catch(e) {
+        this.isLoading = true
+        throw e
+      }
 
     },
 
   },
   head() {
     return {
-      title: 'Add Advertisement',
+      title: 'Edit Advertisement',
     }
   },
+  async mounted() {
+    const response = await this.$axios.get('/api/vendor/advertisements/' + this.$route.params.id)
+    let responseData = response.data
+
+    const tags = responseData.tags && responseData.tags.map((tag) => tag.name)
+
+    this.form = { ...responseData, tags }
+
+  }
 }
 </script>

@@ -11,7 +11,7 @@
       <tiles>
         <profile-update-form class="tile is-child" />
         <card-component title="Profile" icon="account" class="tile is-child">
-          <user-avatar class="image has-max-width is-aligned-center" />
+          <user-avatar :avatar="$auth.user.profile_picture_url" class="image has-max-width is-aligned-center" />
           <hr />
           <b-field label="Name">
             <b-input :value="$auth.user.name" custom-class="is-static" readonly />
