@@ -4,7 +4,7 @@
       <div class="media">
         <div class="media-left">
           <figure class="image is-48x48">
-            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+            <img :src="advertisement.cover_image_path_url" :alt="advertisement.title">
           </figure>
         </div>
 
@@ -36,7 +36,7 @@
 
 
             <b-dropdown-item aria-role="listitem">
-              <nuxt-link :to="`/app/advertisements/edit/${advertisement.id}`">edit</nuxt-link>
+              <nuxt-link :to="`/app/vendor/advertisements/edit/${advertisement.id}`">edit</nuxt-link>
             </b-dropdown-item>
             <b-dropdown-item @click="deleteAdvertisement(advertisement.id)" aria-role="listitem">delete</b-dropdown-item>
           </b-dropdown>

@@ -90,7 +90,7 @@ import HeroBar from '@/components/HeroBar'
 
 export default {
   layout: 'vendor',
-  middleware: ['auth', 'verified', 'userType'],
+  middleware: ['auth', 'verified', 'vendor'],
   components: {
     HeroBar,
     FilePicker,

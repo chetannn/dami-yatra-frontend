@@ -4,6 +4,21 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-two-fifths">
+
+            <b-message
+              v-if="errors.length > 0"
+              title="Whoops! Something went wrong."
+              auto-close
+              :closable="false"
+              v-model="showError"
+              :duration="4000"
+              type="is-danger"
+              aria-close-label="Close message">
+              <ul>
+                <li v-for="(error,key) in errors" :key="key">{{error}}</li>
+              </ul>
+            </b-message>
+
             <card-component
               title="Register"
               icon="lock"
@@ -62,15 +77,17 @@
                     v-model="form.password"
                     type="password"
                     name="password"
+                    password-reveal
                     required
                   />
                 </b-field>
 
                 <b-field label="Confirm Password">
                   <b-input
-                    v-model="form.password"
+                    v-model="form.password_confirmation"
                     type="password"
                     name="password_confirmation"
+                    password-reveal
                     required
                   />
                 </b-field>
@@ -114,6 +131,8 @@ export default {
   data () {
     return {
       isLoading: false,
+      showError: false,
+      errors: [],
       form: {
         email: 'chetan@gmail.com',
         first_name: 'Chetan',
@@ -127,12 +146,9 @@ export default {
   },
   methods: {
     async submit () {
-
       this.isLoading = true
-
       try {
 
-        await this.$axios.get('/sanctum/csrf-cookie')
         const { status }  = await this.$axios.post('/api/register', this.form)
 
         if(status === 201) {
@@ -146,9 +162,11 @@ export default {
 
         this.isLoading = false
       }
-      catch(e) {
-        this.isLoading = true
-        throw e
+      catch(error) {
+            if (error.response.status !== 422) throw error
+            this.showError = true
+            this.errors = Object.values(error.response.data.errors).flat();
+            this.isLoading = false
       }
 
     }
