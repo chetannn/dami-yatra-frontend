@@ -227,7 +227,7 @@ export default {
   },
   head() {
     return {
-      title: 'Add Advertisement',
+      title: 'Add Advertisement - Dami Yatra',
     }
   },
 }

@@ -27,7 +27,7 @@ export default {
             label: 'Dashboard'
           }
         ],
-        'Examples',
+        'Main',
         [
           {
             to: '/app/customer/advertisements',
@@ -35,6 +35,19 @@ export default {
             icon: 'table',
             // updateMark: true
           },
+          {
+            to: '/app/customer/chats',
+            label: 'Chats',
+            icon: 'message',
+            // updateMark: true
+          },
+          {
+            to: '/app/customer/chats',
+            label: 'Payments',
+            icon: 'cash',
+            // updateMark: true
+          },
+
 
           // {
           //   to: '/forms',
