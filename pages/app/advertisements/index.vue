@@ -47,6 +47,7 @@ import AdvertisementCard from "@/components/vendor/AdvertisementCard";
 
 export default {
   layout: 'app',
+  middleware: ['auth'],
   components: {
     TitleBar,
     HeroBar,

@@ -73,7 +73,7 @@
 import CardComponent from '@/components/CardComponent.vue'
 
 export default {
-  middleware: 'guest',
+  middleware: ['guest'],
   name: 'Login',
   components: { CardComponent },
   data () {
@@ -91,10 +91,11 @@ export default {
 
       this.isLoading = true
 
-      this.$auth.loginWith('laravelSanctum', {
+      this.$auth.loginWith('local', {
         data: this.form
       })
         .then(() => {
+          this.isLoading = false
           this.$router.push('/app')
         })
 

@@ -36,6 +36,33 @@
           </b-field>
 
 
+          <b-field
+            label="Duration"
+            message="Duration is required"
+            horizontal
+          >
+            <b-input
+              v-model="form.duration"
+              type="text"
+              required
+            />
+          </b-field>
+
+
+          <b-field
+            label="Price"
+            message="Price is required"
+            horizontal
+          >
+            <b-input
+              v-model="form.price"
+              type="number"
+              placeholder="Price will be inclusive of tax"
+              required
+            />
+          </b-field>
+
+
           <b-field label="Advertisements Valid until?" class="has-check" horizontal>
             <checkbox-picker
               v-model="customElementsForm.checkbox"
@@ -108,7 +135,9 @@ export default {
         is_published: false,
         tags: [],
         ad_end_date: null,
-        itinerary_file: null
+        itinerary_file: null,
+        price: null,
+        duration: null,
       },
       customElementsForm: {
         checkbox: [],

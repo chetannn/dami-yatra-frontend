@@ -37,6 +37,7 @@ import ProfileUpdateForm from '@/components/ProfileUpdateForm'
 export default {
    layout: 'app',
   name: "profile",
+  middleware: ['auth', 'verified'],
   components: {
     TitleBar,
     HeroBar,

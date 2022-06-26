@@ -10,7 +10,7 @@
 
         <div class="media-content" >
           <p class="title is-4">{{advertisement.title}}</p>
-          <p class="subtitle is-6">Rs 20,000
+          <p class="subtitle is-6">Rs {{advertisement.price}}
             (
             <b-icon
               icon="currency-usd"
@@ -50,7 +50,7 @@
       </div>
       <div class="content">
         <div class="buttons">
-          <b-button type="is-info is-light" inverted icon-left="airplane">4 Nights 5 Days</b-button>
+          <b-button type="is-info is-light" inverted icon-left="airplane">{{advertisement.duration}}</b-button>
           <b-button type="is-info is-light" inverted  icon-left="eye">
             0
           </b-button>
