@@ -5,19 +5,7 @@
         <div class="columns is-centered">
           <div class="column is-two-fifths">
 
-            <b-message
-              v-if="errors.length > 0"
-              title="Whoops! Something went wrong."
-              auto-close
-              :closable="false"
-              v-model="showError"
-              :duration="4000"
-              type="is-danger"
-              aria-close-label="Close message">
-              <ul>
-                <li v-for="(error,key) in errors" :key="key">{{error}}</li>
-              </ul>
-            </b-message>
+           <AppError :errors="errors" v-model="showError" />
 
             <card-component
               title="Register"
@@ -123,10 +111,11 @@
 
 <script>
 import CardComponent from '@/components/CardComponent.vue'
+import AppError from "@/components/AppError";
 
 export default {
   name: 'Login',
-  components: { CardComponent },
+  components: { CardComponent, AppError },
   middleware: 'guest',
   data () {
     return {
@@ -142,6 +131,11 @@ export default {
         remember: false,
         type: 0
       }
+    }
+  },
+  head() {
+    return {
+      title: 'Register — Dami Yatra',
     }
   },
   methods: {
