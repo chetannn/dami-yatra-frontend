@@ -39,6 +39,7 @@
             placeholder="Type or select a date..."
             icon="calendar-today"
             v-model="form.expiration_date"
+            position="is-top-right"
             editable>
           </b-datepicker>
         </b-field>

@@ -35,7 +35,9 @@ import PasswordUpdateForm from '@/components/PasswordUpdateForm'
 import ProfileUpdateForm from '@/components/ProfileUpdateForm'
 
 export default {
-   layout: 'app',
+  layout ({ $auth }) {
+    return ($auth.loggedIn && $auth.user.type === 0) ? 'customer' : 'vendor'
+  },
   name: "profile",
   middleware: ['auth', 'verified'],
   components: {
@@ -47,7 +49,7 @@ export default {
   },
   computed: {
     titleStack() {
-      return ['Vendor', 'Profile']
+      return ['Profile']
     },
   },
 }

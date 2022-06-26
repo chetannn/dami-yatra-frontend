@@ -32,6 +32,7 @@
 
 
         <b-table-column custom-key="actions" label="Actions" v-slot="props">
+          <b-button>view</b-button>
           <b-button type="is-primary">edit</b-button>
           <b-button type="is-danger">delete</b-button>
         </b-table-column>
@@ -49,8 +50,8 @@ import HeroBar from '@/components/HeroBar'
 import CouponModal from "@/components/vendor/CouponModal";
 
 export default {
-  middleware: ['auth'],
-  layout: 'app',
+  middleware: ['auth', 'verified', 'vendor'],
+  layout: 'vendor',
   components: {
     TitleBar,
     HeroBar,

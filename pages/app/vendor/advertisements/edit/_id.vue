@@ -89,7 +89,8 @@ import FilePicker from '@/components/FilePicker'
 import HeroBar from '@/components/HeroBar'
 
 export default {
-  layout: 'app',
+  layout: 'vendor',
+  middleware: ['auth', 'verified', 'userType'],
   components: {
     HeroBar,
     FilePicker,

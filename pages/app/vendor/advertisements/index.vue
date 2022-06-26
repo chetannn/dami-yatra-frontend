@@ -3,7 +3,7 @@
     <title-bar :title-stack="titleStack" />
     <hero-bar>
       Advertisements
-      <nuxt-link slot="right" to="/app/advertisements/create" class="button is-primary">
+      <nuxt-link slot="right" to="/app/vendor/advertisements/create" class="button is-primary">
         Create an Advertisement
       </nuxt-link>
     </hero-bar>
@@ -46,8 +46,8 @@ import HeroBar from '@/components/HeroBar'
 import AdvertisementCard from "@/components/vendor/AdvertisementCard";
 
 export default {
-  layout: 'app',
-  middleware: ['auth'],
+  layout: 'vendor',
+  middleware: ['auth', 'verified', 'vendor'],
   components: {
     TitleBar,
     HeroBar,

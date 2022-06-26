@@ -11,6 +11,38 @@
       <card-component title="Advertisement" icon="ballot">
         <form @submit.prevent="submit">
 
+          <b-field label="Cover Picture" horizontal>
+            <b-upload v-model="form.cover_image"
+                      drag-drop>
+              <section class="section">
+                <div class="content has-text-centered">
+                  <p>
+                    <b-icon
+                      icon="upload"
+                      size="is-large">
+                    </b-icon>
+                  </p>
+                  <p>Drop cover picture for advertisement</p>
+                </div>
+              </section>
+            </b-upload>
+
+          </b-field>
+
+          <b-field v-if="form.cover_image" horizontal>
+            <div class="tags" v-if="form.cover_image">
+            <span
+              class="tag is-primary" >
+                {{form.cover_image.name}}
+                <button class="delete is-small"
+                        type="button"
+                >
+                </button>
+            </span>
+            </div>
+          </b-field>
+
+
             <b-field label="Title" horizontal>
               <b-input
                 v-model="form.title"
@@ -64,9 +96,9 @@
 
 
           <b-field label="Advertisements Valid until?" class="has-check" horizontal>
-            <checkbox-picker
-              v-model="customElementsForm.checkbox"
-              :options="{ one: '1 month', three: '3 months', six: '6 months', twelve: '12 months' }"
+            <radio-picker
+              v-model="ad_expiration"
+              :options="{ 1: '1 month', 3: '3 months', 6: '6 months', 12: '12 months' }"
               type="is-primary"
             />
           </b-field>
@@ -116,7 +148,8 @@ import FilePicker from '@/components/FilePicker'
 import HeroBar from '@/components/HeroBar'
 
 export default {
-  layout: 'app',
+  layout: 'vendor',
+  middleware: ['auth', 'verified', 'userType'],
   name: 'Forms',
   components: {
     HeroBar,
@@ -129,21 +162,17 @@ export default {
   data() {
     return {
       isLoading: false,
+      ad_expiration: 1,
       form: {
         title: null,
         description: null,
-        is_published: false,
+        is_published: 0,
         tags: [],
         ad_end_date: null,
         itinerary_file: null,
         price: null,
         duration: null,
-      },
-      customElementsForm: {
-        checkbox: [],
-        radio: null,
-        switch: true,
-        file: null,
+        cover_image: null,
       },
     }
   },
@@ -154,15 +183,33 @@ export default {
   },
   methods: {
    async submit() {
+
        this.isLoading = true
+
+      if(this.ad_expiration) {
+        let currentDate = new Date()
+        currentDate.setMonth(currentDate.getMonth() + this.ad_expiration)
+        this.form.ad_end_date = currentDate.toLocaleDateString()
+      }
+
      try {
+           let formData = new FormData()
+        formData.append('itinerary_file', this.form.itinerary_file)
+        formData.append('cover_image', this.form.cover_image)
+        formData.append('title', this.form.title)
+        formData.append('description', this.form.description)
+        formData.append('tags[]', this.form.tags)
+        formData.append('price', this.form.price)
+        formData.append('duration', this.form.duration)
+        formData.append('ad_end_date', this.form.ad_end_date)
+        formData.append('is_published', this.form.is_published)
 
-          await this.$axios.get('/sanctum/csrf-cookie')
+        const response = await this.$axios.post('/api/vendor/advertisements', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
 
-           // let formData = new FormData()
-           // formData.append('file', file)
-
-          await this.$axios.post('/api/vendor/advertisements', this.form)
             this.$buefy.snackbar.open({
               message: 'Advertisement created successfully',
               queue: false,
@@ -172,8 +219,7 @@ export default {
      }
 
      catch(e) {
-         this.isLoading = true
-         throw e
+         this.isLoading = false
      }
 
     },

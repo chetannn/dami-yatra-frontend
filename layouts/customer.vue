@@ -22,7 +22,7 @@ export default {
         'General',
         [
           {
-            to: '/app',
+            to: '/app/customer',
             icon: 'desktop-mac',
             label: 'Dashboard'
           }
@@ -30,17 +30,12 @@ export default {
         'Examples',
         [
           {
-            to: '/app/advertisements',
+            to: '/app/customer/advertisements',
             label: 'Advertisements',
             icon: 'table',
             // updateMark: true
           },
-          {
-            to: '/app/coupons',
-            label: 'Coupons',
-            icon: 'table',
-            // updateMark: true
-          },
+
           // {
           //   to: '/forms',
           //   label: 'Forms',
