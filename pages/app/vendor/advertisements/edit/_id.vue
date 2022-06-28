@@ -8,74 +8,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component title="Advertisement" icon="ballot">
-        <form @submit.prevent="submit">
-
-          <b-field label="Title" horizontal>
-            <b-input
-              v-model="form.title"
-              icon="account"
-              placeholder="Title"
-              name="title"
-              required
-            />
-          </b-field>
-
-          <b-field
-            label="Description"
-            message="Your description. Max 255 characters"
-            horizontal
-          >
-            <b-input
-              v-model="form.description"
-              type="textarea"
-              placeholder="Description of the advertisement"
-              maxlength="255"
-              required
-            />
-          </b-field>
-
-
-          <b-field label="Advertisements Valid until?" class="has-check" horizontal>
-            <checkbox-picker
-              v-model="customElementsForm.checkbox"
-              :options="{ one: '1 month', three: '3 months', six: '6 months', twelve: '12 months' }"
-              type="is-primary"
-            />
-          </b-field>
-
-          <b-field label="File" horizontal>
-            <file-picker v-model="form.itinerary_file" />
-          </b-field>
-
-          <b-field label="Tags" horizontal>
-            <b-taginput
-              ellipsis
-              v-model="form.tags"
-              icon="label"
-              placeholder="Add a tag"
-              aria-close-label="Delete this tag">
-            </b-taginput>
-          </b-field>
-
-          <b-field label="Publish" horizontal>
-            <b-switch v-model="form.is_published">
-            </b-switch>
-          </b-field>
-
-          <hr />
-          <b-field horizontal>
-            <b-field grouped>
-              <div class="control">
-                <b-button native-type="submit" type="is-primary"
-                >Update Advertisement</b-button
-                >
-              </div>
-            </b-field>
-          </b-field>
-
-        </form>
-      </card-component>
+        <AdvertisementForm :advertisement="advertisement" />
     </section>
   </div>
 </template>
@@ -87,11 +20,13 @@ import CheckboxPicker from '@/components/CheckboxPicker'
 import RadioPicker from '@/components/RadioPicker'
 import FilePicker from '@/components/FilePicker'
 import HeroBar from '@/components/HeroBar'
+import AdvertisementForm from '@/components/vendor/AdvertisementForm'
 
 export default {
   layout: 'vendor',
   middleware: ['auth', 'verified', 'vendor'],
   components: {
+    AdvertisementForm,
     HeroBar,
     FilePicker,
     RadioPicker,
@@ -102,20 +37,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      form: {
-        title: null,
-        description: null,
-        is_published: false,
-        tags: [],
-        ad_end_date: null,
-        itinerary_file: null
-      },
-      customElementsForm: {
-        checkbox: [],
-        radio: null,
-        switch: true,
-        file: null,
-      },
+      advertisement: null,
     }
   },
   computed: {
@@ -127,7 +49,6 @@ export default {
     async submit() {
       try {
         this.isLoading = true
-        await this.$axios.get('/sanctum/csrf-cookie')
         await this.$axios.put('/api/vendor/advertisements/' + this.$route.params.id , this.form)
 
         this.$buefy.snackbar.open({
@@ -157,7 +78,7 @@ export default {
 
     const tags = responseData.tags && responseData.tags.map((tag) => tag.name)
 
-    this.form = { ...responseData, tags }
+    this.advertisement = { ...responseData, tags }
 
   }
 }
