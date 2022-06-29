@@ -8,56 +8,18 @@
     <section class="section is-main-section">
 
       <div class="column">
-        <b-tabs v-model="activeTab" type="is-toggle" expanded>
+        <b-tabs v-model="activeTab" @input="onTabChange" type="is-toggle" expanded>
           <b-tab-item label="All" icon="clipboard-list-outline">
             <div class="mb-4"  v-for="(advertisement) in advertisements" :key="advertisement.id">
-              <div class="card">
-                <div class="card-content" >
-                  <div class="media">
-                    <div class="media-left">
-                      <figure class="image is-48x48">
-                        <img :src="advertisement.cover_image_path_url" :alt="advertisement.title">
-                      </figure>
-                    </div>
-
-                    <div class="media-content" >
-                      <p class="title is-4">{{advertisement.title}}</p>
-                      <p class="subtitle is-6">Rs {{advertisement.price}}
-                        (
-                        <b-icon
-                          icon="currency-usd"
-                          size="is-small"
-                          type="is-info">
-                        </b-icon>
-
-                        )</p>
-                    </div>
-
-                  </div>
-
-                  <div class="content">
-                    {{advertisement.description}}
-                    <br>
-
-                  </div>
-                  <div class="content">
-                    <div class="buttons">
-                      <b-button type="is-info is-light" inverted icon-left="airplane">{{advertisement.duration}}</b-button>
-                      <b-button type="is-info is-light" inverted  icon-left="eye">
-                        0
-                      </b-button>
-                      <b-button type="is-warning is-light" inverted icon-left="calendar-range">{{ diffDate(advertisement.ad_end_date) }} Days Remaining</b-button>
-
-                      <b-icon type="is-primary" icon="heart-outline"></b-icon>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <AdvertisementCard :favoriteLoading="favoriteLoading" :advertisement="advertisement" @toggle-favorite="toggleFavoriteAdvertisement" />
             </div>
-
           </b-tab-item>
-          <b-tab-item label="Favorites" icon="playlist-check"></b-tab-item>
+
+          <b-tab-item label="Favorites" icon="playlist-check">
+            <div class="mb-4" v-for="(advertisement) in advertisements" :key="advertisement.id">
+            <AdvertisementCard :favoriteLoading="favoriteLoading" :advertisement="advertisement" @toggle-favorite="toggleFavoriteAdvertisement" />
+            </div>
+          </b-tab-item>
           <b-tab-item label="Purchased" icon="format-list-checkbox"></b-tab-item>
         </b-tabs>
       </div>
@@ -67,9 +29,9 @@
 
       <b-pagination
         :total="total"
-        v-model="currentPage"
+        v-model="current_page"
         :simple="false"
-        :per-page="perPage"
+        :per-page="per_page"
         aria-next-label="Next page"
         aria-previous-label="Previous page"
         aria-page-label="Page"
@@ -84,16 +46,21 @@
 </template>
 
 <script>
+import AdvertisementCard from "@/components/customer/AdvertisementCard";
+
 export default {
+  components: {AdvertisementCard},
   layout: 'customer',
   middleware: ['auth', 'verified', 'customer'],
   data() {
     return {
       advertisements: [],
       total: 0,
-      currentPage: 1,
-      perPage: 6,
+      current_page: 1,
+      per_page: 6,
       activeTab: 0,
+      favoriteLoading: false,
+      params: {}
     }
   },
   computed: {
@@ -102,21 +69,49 @@ export default {
     },
   },
   methods: {
-    async getAll() {
-      const response = await this.$axios.get(`/api/customer/advertisements?page=${this.currentPage}`)
+      async onTabChange(value) {
+
+         if(value === 1) {
+           this.params.is_favorite = true
+
+         }
+
+         if(value === 0) {
+           delete this.params.is_favorite
+         }
+
+        await this.getAll(this.params)
+
+      },
+     async toggleFavoriteAdvertisement(advertisement) {
+      try {
+
+        this.favoriteLoading = true
+        await this.$axios.post('/api/customer/saved-advertisements/toggle', {
+          advertisement_id: advertisement.id
+        })
+
+        await this.getAll()
+        this.favoriteLoading = false
+
+      }
+      catch (error) {
+
+      }
+    },
+    async getAll(params = {}) {
+
+      params.current_page = this.current_page
+      this.params = params
+
+      const qs = new URLSearchParams(this.params);
+
+      const response = await this.$axios.get(`/api/customer/advertisements?${qs.toString()}`)
       this.advertisements = response.data.data
       this.total = response.data.total
-      this.currentPage = response.data.current_page
-      this.perPage = response.data.per_page
+      this.current_page = response.data.current_page
+      this.per_page = response.data.per_page
 
-    },
-    diffDate(toDate, fromDate = null, unit = 'day') {
-
-      if(!fromDate) {
-        fromDate = this.$dayjs()
-      }
-
-      return this.$dayjs(toDate).diff(fromDate, unit)
     },
     async onPageChange() {
       const loadingComponent = this.$buefy.loading.open({

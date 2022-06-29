@@ -1,0 +1,71 @@
+<template>
+  <div class="card">
+    <div class="card-content" >
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img :src="advertisement.cover_image_path_url" :alt="advertisement.title">
+          </figure>
+        </div>
+
+        <div class="media-content" >
+          <p class="title is-4">{{advertisement.title}}</p>
+          <p class="subtitle is-6">Rs {{advertisement.price}}
+            (
+            <b-icon
+              icon="currency-usd"
+              size="is-small"
+              type="is-info">
+            </b-icon>
+
+            )</p>
+        </div>
+
+      </div>
+
+      <div class="content">
+        {{advertisement.description}}
+        <br>
+
+      </div>
+      <div class="content">
+        <div class="buttons">
+          <b-button type="is-info is-light" inverted icon-left="airplane">{{advertisement.duration}}</b-button>
+          <b-button type="is-info is-light" inverted  icon-left="eye">
+            0
+          </b-button>
+          <b-button type="is-warning is-light" inverted icon-left="calendar-range">{{ diffDate(advertisement.ad_end_date) }} Days Remaining</b-button>
+
+          <b-button :loading="favoriteLoading" v-if="advertisement.is_favorite" type="is-primary" @click="toggleFavoriteAdvertisement(advertisement)" icon-left="heart">Remove Favorite</b-button>
+          <b-button :loading="favoriteLoading" v-else type="is-primary" @click="toggleFavoriteAdvertisement(advertisement)" icon-left="heart-outline">Favorite</b-button>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</template>
+
+<script>
+export default {
+  props: ['advertisement', 'favoriteLoading'],
+  methods: {
+    diffDate(toDate, fromDate = null, unit = 'day') {
+
+      if(!fromDate) {
+        fromDate = this.$dayjs()
+      }
+
+      return this.$dayjs(toDate).diff(fromDate, unit)
+    },
+    toggleFavoriteAdvertisement(advertisement) {
+        this.$emit('toggle-favorite', advertisement)
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
