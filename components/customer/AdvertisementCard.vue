@@ -48,17 +48,12 @@
 </template>
 
 <script>
+import appMixin from '@/mixins'
+
 export default {
   props: ['advertisement', 'favoriteLoading'],
+  mixins: [appMixin],
   methods: {
-    diffDate(toDate, fromDate = null, unit = 'day') {
-
-      if(!fromDate) {
-        fromDate = this.$dayjs()
-      }
-
-      return this.$dayjs(toDate).diff(fromDate, unit)
-    },
     toggleFavoriteAdvertisement(advertisement) {
         this.$emit('toggle-favorite', advertisement)
     }
