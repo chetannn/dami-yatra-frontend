@@ -34,10 +34,11 @@
           <b-button type="is-info is-light" inverted  icon-left="eye">
             0
           </b-button>
-          <b-button type="is-warning is-light" inverted icon-left="calendar-range">{{ diffDate(advertisement.ad_end_date) }} Days Remaining</b-button>
+          <b-button type="is-warning is-light" inverted icon-left="calendar-range">5/10 Booked</b-button>
 
           <b-button :loading="favoriteLoading" v-if="advertisement.is_favorite" type="is-primary" @click="toggleFavoriteAdvertisement(advertisement)" icon-left="heart">Remove Favorite</b-button>
           <b-button :loading="favoriteLoading" v-else type="is-primary" @click="toggleFavoriteAdvertisement(advertisement)" icon-left="heart-outline">Favorite</b-button>
+          <b-button @click="purchase(advertisement)">Purchase</b-button>
 
 
         </div>
@@ -56,11 +57,24 @@ export default {
   methods: {
     toggleFavoriteAdvertisement(advertisement) {
         this.$emit('toggle-favorite', advertisement)
+    },
+    purchase(advertisement) {
+        this.$khalti({
+          amount: 20 * 100,
+          eventHandler: {
+            onSuccess: async (response) => {
+              await this.$axios.post('/api/customer/pay', {
+                amount: 20 * 100,
+                advertisement_id: advertisement.id,
+                token: response.token
+              });
+            }
+          }
+
+        })
+
+
     }
   }
 }
 </script>
-
-<style scoped>
-
-</style>

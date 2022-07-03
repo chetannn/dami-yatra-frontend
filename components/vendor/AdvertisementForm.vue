@@ -72,6 +72,7 @@
               v-model="form.duration"
               type="text"
               required
+              placeholder="eg. 4 days 5 nights"
             />
           </b-field>
 
@@ -87,6 +88,14 @@
               placeholder="Price will be inclusive of tax"
               required
             />
+          </b-field>
+
+          <b-field label="Quantity" horizontal>
+            <b-input type="number" required v-model="form.quantity" />
+          </b-field>
+
+          <b-field label="Tour Start Date" horizontal>
+            <b-datepicker v-model="form.tour_start_date" />
           </b-field>
 
 
@@ -171,6 +180,9 @@ export default {
         price: null,
         duration: null,
         cover_image: null,
+        tour_start_date: null,
+        quantity: null,
+        status: 0,
       },
     }
   },
@@ -191,6 +203,10 @@ export default {
           this.form.ad_end_date = date.format('YYYY-MM-DD')
         }
 
+        if(this.form.tour_start_date) {
+          this.form.tour_start_date = this.$dayjs(this.form.tour_start_date).format('YYYY-MM-DD')
+        }
+
         let formData = new FormData()
         formData.append('itinerary_file', this.form.itinerary_file)
         formData.append('cover_image', this.form.cover_image)
@@ -201,6 +217,9 @@ export default {
         formData.append('duration', this.form.duration)
         formData.append('ad_end_date', this.form.ad_end_date)
         formData.append('is_published', this.form.is_published)
+        formData.append('quantity', this.form.quantity)
+        formData.append('tour_start_date', this.form.tour_start_date)
+        formData.append('status', this.form.status)
 
         const response = await this.$axios.post('/api/vendor/advertisements', formData, {
           headers: {
@@ -226,7 +245,11 @@ export default {
       }
 
     },
-
+  },
+  mounted() {
+    if(this.advertisement) {
+      this.form = this.advertisement
+    }
   }
 
 }

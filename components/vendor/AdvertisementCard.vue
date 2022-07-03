@@ -54,7 +54,8 @@
           <b-button type="is-info is-light" inverted  icon-left="eye">
             0
           </b-button>
-          <b-button type="is-warning is-light" inverted icon-left="calendar-range">20 Days Remaining</b-button>
+          <b-button type="is-warning is-light" inverted icon-left="calendar-range">{{displayExpirationDate(advertisement.ad_end_date)}}</b-button>
+          <b-button type="is-primary" icon-left="heart">{{advertisement.favorited_by_count}}</b-button>
         </div>
       </div>
     </div>
@@ -62,8 +63,11 @@
 </template>
 
 <script>
+import AppMixin from "@/mixins"
+
 export default {
   name: "AdvertisementCard",
+  mixins: [AppMixin],
   props: {
      advertisement: {
        type: Object
@@ -72,6 +76,17 @@ export default {
   methods: {
     deleteAdvertisement(id) {
       this.$emit('delete-advertisement', id)
+    },
+    displayExpirationDate(adEndDate) {
+      const remainingDays = this.diffDate(adEndDate)
+
+      if(remainingDays <= 0) {
+         return 'Advertisement Expired'
+      }
+      else {
+        return `${remainingDays} Days Remaining`
+      }
+
     }
   }
 }

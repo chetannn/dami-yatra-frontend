@@ -11,7 +11,7 @@
     <section class="section is-main-section">
 
   <div class="column">
-    <b-tabs v-model="activeTab" type="is-toggle" expanded>
+    <b-tabs v-model="activeTab" @input="onTabChange" type="is-toggle" expanded>
       <b-tab-item label="All" icon="clipboard-list-outline">
         <div class="mb-4"  v-for="(advertisement) in advertisements" :key="advertisement.id">
           <AdvertisementCard :advertisement="advertisement" @delete-advertisement="deleteAdvertisement" />
@@ -19,15 +19,19 @@
 
       </b-tab-item>
       <b-tab-item label="Published" icon="playlist-check"></b-tab-item>
-      <b-tab-item label="Draft" icon="format-list-checkbox"></b-tab-item>
+      <b-tab-item label="Draft" icon="format-list-checkbox">
+        <div class="mb-4"  v-for="(advertisement) in advertisements" :key="advertisement.id">
+          <AdvertisementCard :advertisement="advertisement" @delete-advertisement="deleteAdvertisement" />
+        </div>
+      </b-tab-item>
     </b-tabs>
   </div>
 
       <b-pagination
         :total="total"
-        v-model="currentPage"
+        v-model="current_page"
         :simple="false"
-        :per-page="perPage"
+        :per-page="per_page"
         aria-next-label="Next page"
         aria-previous-label="Previous page"
         aria-page-label="Page"
@@ -62,9 +66,10 @@ export default {
      return {
        advertisements: [],
        total: 0,
-       currentPage: 1,
-       perPage: 10,
-       activeTab: 0
+       current_page: 1,
+       per_page: 10,
+       activeTab: 0,
+       params: {}
      }
   },
   methods: {
@@ -99,6 +104,22 @@ export default {
         }
       })
     },
+   async onTabChange(value) {
+      if(value === 0) {
+        delete this.params.status
+      }
+
+      if(value === 1) {
+        this.params.status = 1
+      }
+
+      if(value === 2) {
+        this.params.status = 0
+      }
+
+      await this.getAll(this.params)
+
+    },
     async onPageChange() {
       const loadingComponent = this.$buefy.loading.open({
         container: null
@@ -108,12 +129,18 @@ export default {
 
       loadingComponent.close()
     },
-    async getAll() {
-      const response = await this.$axios.get(`/api/vendor/advertisements?page=${this.currentPage}`)
+    async getAll(params = {}) {
+
+      params.current_page = this.current_page
+      this.params = params
+
+      const qs = new URLSearchParams(this.params)
+
+      const response = await this.$axios.get(`/api/vendor/advertisements?page=${qs.toString()}`)
       this.advertisements = response.data.data
       this.total = response.data.total
-      this.currentPage = response.data.current_page
-      this.perPage = response.data.per_page
+      this.current_page = response.data.current_page
+      this.per_page = response.data.per_page
 
     }
   },

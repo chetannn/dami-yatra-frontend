@@ -8,7 +8,8 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-        <AdvertisementForm :advertisement="advertisement" />
+       <div v-if="$fetchState.pending">Loading...</div>
+        <AdvertisementForm v-else :advertisement="advertisement" />
     </section>
   </div>
 </template>
@@ -72,14 +73,12 @@ export default {
       title: 'Edit Advertisement',
     }
   },
-  async mounted() {
-    const response = await this.$axios.get('/api/vendor/advertisements/' + this.$route.params.id)
-    let responseData = response.data
+  async fetch() {
+    const response = await this.$axios.get(`/api/vendor/advertisements/${this.$route.params.id}`)
+    this.advertisement = response.data
+    const tags = response.data.tags && response.data.tags.map((tag) => tag.name)
+    this.advertisement = { ...response.data, tags }
+  },
 
-    const tags = responseData.tags && responseData.tags.map((tag) => tag.name)
-
-    this.advertisement = { ...responseData, tags }
-
-  }
 }
 </script>
