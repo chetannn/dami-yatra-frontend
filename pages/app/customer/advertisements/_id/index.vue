@@ -7,8 +7,8 @@
     <section>
     <div class="card">
       <div class="card-image">
-        <figure class="image is-4by3">
-          <img src="https://static.toiimg.com/photo/67321906/kathmandu.jpg?width=748&resize=4" alt="Placeholder image">
+        <figure class="image is-2by1">
+          <img src="https://static.toiimg.com/photo/67321906/kathmandu.jpg?width=740&resize=4" alt="Placeholder image">
         </figure>
       </div>
       <div class="card-content">
@@ -116,41 +116,44 @@
         </div>
       </div>
     </section>
-    <section class="section is-main-section" >
-      <div class="column">
-        <p class="title is-3">
-          <b-icon
-          icon="star-circle"
-          size="is-small">
-        </b-icon> Quick Enquiry</p>
-      <b-field horizontal label="Subject" type="is-danger" message="Please enter a subject">
-        <b-input name="subject" expanded></b-input>
-      </b-field>
 
-      <b-field horizontal label="From">
-        <b-input name="name" placeholder="Name" expanded></b-input>
-        <b-input name="email" type="email" placeholder="nobody@nowhere.com" expanded></b-input>
-      </b-field>
+<!--    <section class="section is-main-section" >-->
+<!--      <div class="column">-->
+<!--        <p class="title is-3">-->
+<!--          <b-icon-->
+<!--          icon="star-circle"-->
+<!--          size="is-small">-->
+<!--        </b-icon> Quick Enquiry</p>-->
+<!--      <b-field horizontal label="Subject" type="is-danger" message="Please enter a subject">-->
+<!--        <b-input name="subject" expanded></b-input>-->
+<!--      </b-field>-->
 
-      <b-field horizontal label="Topic">
-        <b-select placeholder="Select a topic">
-          <option value="inquiry">Inquiry</option>
-          <option value="complain">Complain</option>
-          <option value="other">Other</option>
-        </b-select>
-      </b-field>
+<!--      <b-field horizontal label="From">-->
+<!--        <b-input name="name" placeholder="Name" expanded></b-input>-->
+<!--        <b-input name="email" type="email" placeholder="nobody@nowhere.com" expanded></b-input>-->
+<!--      </b-field>-->
 
-      <b-field horizontal label="Message">
-        <b-input type="textarea"></b-input>
-      </b-field>
+<!--      <b-field horizontal label="Topic">-->
+<!--        <b-select placeholder="Select a topic">-->
+<!--          <option value="inquiry">Inquiry</option>-->
+<!--          <option value="complain">Complain</option>-->
+<!--          <option value="other">Other</option>-->
+<!--        </b-select>-->
+<!--      </b-field>-->
 
-      <b-field horizontal><!-- Label left empty for spacing -->
-        <p class="control">
-          <b-button label="Send message" type="is-primary" />
-        </p>
-      </b-field>
-      </div>
-    </section>
+<!--      <b-field horizontal label="Message">-->
+<!--        <b-input type="textarea"></b-input>-->
+<!--      </b-field>-->
+
+<!--      <b-field horizontal>&lt;!&ndash; Label left empty for spacing &ndash;&gt;-->
+<!--        <p class="control">-->
+<!--          <b-button label="Send message" type="is-primary" />-->
+<!--        </p>-->
+<!--      </b-field>-->
+<!--      </div>-->
+<!--    </section>-->
+
+
     <section>
 
       <section>
@@ -168,60 +171,15 @@
           </figure>
           <div class="media-content">
             <div class="content">
-              <p>
                 <strong>Barbara Middleton</strong>
-                <br>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
-                <br>
-                <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
-              </p>
+               <div>
+                 <p>comment</p>
+                 <div>
+                   <small><a>Like</a> · 3 hrs</small>
+                 </div>
+               </div>
             </div>
 
-            <article class="media">
-              <figure class="media-left">
-                <p class="image is-48x48">
-                  <img src="https://bulma.io/images/placeholders/96x96.png">
-                </p>
-              </figure>
-              <div class="media-content">
-                <div class="content">
-                  <p>
-                    <strong>Sean Brown</strong>
-                    <br>
-                    Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
-                    <br>
-                    <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
-                  </p>
-                </div>
-
-                <article class="media">
-                  Vivamus quis semper metus, non tincidunt dolor. Vivamus in mi eu lorem cursus ullamcorper sit amet nec massa.
-                </article>
-
-                <article class="media">
-                  Morbi vitae diam et purus tincidunt porttitor vel vitae augue. Praesent malesuada metus sed pharetra euismod. Cras tellus odio, tincidunt iaculis diam non, porta aliquet tortor.
-                </article>
-              </div>
-            </article>
-
-            <article class="media">
-              <figure class="media-left">
-                <p class="image is-48x48">
-                  <img src="https://bulma.io/images/placeholders/96x96.png">
-                </p>
-              </figure>
-              <div class="media-content">
-                <div class="content">
-                  <p>
-                    <strong>Kayli Eunice </strong>
-                    <br>
-                    Sed convallis scelerisque mauris, non pulvinar nunc mattis vel. Maecenas varius felis sit amet magna vestibulum euismod malesuada cursus libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus lacinia non nisl id feugiat.
-                    <br>
-                    <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
-                  </p>
-                </div>
-              </div>
-            </article>
           </div>
         </article>
 
@@ -313,7 +271,12 @@
 <script>
 export default {
   middleware: ['auth', 'verified', 'customer'],
-  layout: 'customer'
+  layout: 'customer',
+  computed: {
+    titleStack() {
+      return ['Advertisement Detail']
+    },
+  },
 }
 </script>
 

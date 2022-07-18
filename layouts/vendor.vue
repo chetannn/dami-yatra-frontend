@@ -41,6 +41,11 @@ export default {
             icon: 'table',
             // updateMark: true
           },
+          {
+            to: '/app/vendor/customer-payments',
+            label: 'Customer Payments',
+            icon: 'table'
+          },
           // {
           //   to: '/forms',
           //   label: 'Forms',

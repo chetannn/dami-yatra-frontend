@@ -20,7 +20,11 @@
             <AdvertisementCard :favoriteLoading="favoriteLoading" :advertisement="advertisement" @toggle-favorite="toggleFavoriteAdvertisement" />
             </div>
           </b-tab-item>
-          <b-tab-item label="Purchased" icon="format-list-checkbox"></b-tab-item>
+          <b-tab-item label="Purchased" icon="format-list-checkbox">
+            <div class="mb-4" v-for="(advertisement) in advertisements" :key="advertisement.id">
+              <AdvertisementCard :favoriteLoading="favoriteLoading" :advertisement="advertisement" @toggle-favorite="toggleFavoriteAdvertisement" />
+            </div>
+          </b-tab-item>
         </b-tabs>
       </div>
 
@@ -73,11 +77,18 @@ export default {
 
          if(value === 1) {
            this.params.is_favorite = true
+           delete this.params.is_purchased
 
+         }
+
+         if(value === 2) {
+           this.params.is_purchased = true
+           delete this.params.is_favorite
          }
 
          if(value === 0) {
            delete this.params.is_favorite
+           delete this.params.is_purchased
          }
 
         await this.getAll(this.params)

@@ -34,7 +34,7 @@
           <b-button type="is-info is-light" inverted  icon-left="eye">
             0
           </b-button>
-          <b-button type="is-warning is-light" inverted icon-left="calendar-range">5/10 Booked</b-button>
+          <b-button type="is-warning is-light" inverted icon-left="calendar-range">{{advertisement.purchased_by_count}}/{{advertisement.quantity}} Booked</b-button>
 
           <b-button :loading="favoriteLoading" v-if="advertisement.is_favorite" type="is-primary" @click="toggleFavoriteAdvertisement(advertisement)" icon-left="heart">Remove Favorite</b-button>
           <b-button :loading="favoriteLoading" v-else type="is-primary" @click="toggleFavoriteAdvertisement(advertisement)" icon-left="heart-outline">Favorite</b-button>

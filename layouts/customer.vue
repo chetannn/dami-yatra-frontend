@@ -35,14 +35,9 @@ export default {
             icon: 'table',
             // updateMark: true
           },
+
           {
-            to: '/app/customer/chats',
-            label: 'Chats',
-            icon: 'message',
-            // updateMark: true
-          },
-          {
-            to: '/app/customer/chats',
+            to: '/app/customer/payments',
             label: 'Payments',
             icon: 'cash',
             // updateMark: true
