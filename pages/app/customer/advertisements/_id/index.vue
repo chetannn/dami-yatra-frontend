@@ -163,7 +163,8 @@
             icon="star-circle"
             size="is-small">
           </b-icon> Discussions</p>
-        <article class="media">
+
+        <article :key="discussion.id" v-for="discussion in discussions" class="media">
           <figure class="media-left">
             <p class="image is-64x64">
               <img src="https://bulma.io/images/placeholders/128x128.png">
@@ -173,7 +174,7 @@
             <div class="content">
                 <strong>Barbara Middleton</strong>
                <div>
-                 <p>comment</p>
+                 <p>{{discussion.message}}</p>
                  <div>
                    <small><a>Like</a> · 3 hrs</small>
                  </div>
@@ -186,18 +187,18 @@
         <article class="media">
           <figure class="media-left">
             <p class="image is-64x64">
-              <img src="https://bulma.io/images/placeholders/128x128.png">
+              <img class="is-rounded" :src="$auth.user.profile_picture_url">
             </p>
           </figure>
           <div class="media-content">
             <div class="field">
               <p class="control">
-                <textarea class="textarea" placeholder="Add a comment..."></textarea>
+                <textarea v-model="message" class="textarea" placeholder="Add a comment..."></textarea>
               </p>
             </div>
             <div class="field">
               <p class="control">
-                <button class="button">Post comment</button>
+                <button @click="postComment" class="button">Post comment</button>
               </p>
             </div>
           </div>
@@ -276,6 +277,37 @@ export default {
     titleStack() {
       return ['Advertisement Detail']
     },
+  },
+
+  data() {
+    return {
+      discussions: [],
+      message: ''
+    }
+  },
+  methods: {
+    async postComment() {
+      await this.$axios.post('/api/customer/advertisement-discussions', {
+        advertisement_id: this.$route.params.id,
+        message: this.message
+      })
+      this.message = ''
+    },
+    async getAll() {
+       const response = await this.$axios.get('/api/customer/advertisement-discussions')
+       this.discussions = response.data
+    }
+  },
+
+  async mounted() {
+
+    const loadingComponent = this.$buefy.loading.open({
+      container: null
+    })
+
+    await this.getAll();
+
+    loadingComponent.close()
   },
 }
 </script>

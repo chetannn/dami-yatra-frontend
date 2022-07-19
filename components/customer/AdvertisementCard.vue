@@ -4,7 +4,7 @@
       <div class="media">
         <div class="media-left">
           <figure class="image is-48x48">
-            <img :src="advertisement.cover_image_path_url" :alt="advertisement.title">
+            <img :src="advertisement.vendor.user.profile_picture_url" :alt="advertisement.title">
           </figure>
         </div>
 
