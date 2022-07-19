@@ -1,4 +1,5 @@
 <template>
+  <nuxt-link :to="`/app/customer/advertisements/${advertisement.id}`">
   <div class="card">
     <div class="card-content" >
       <div class="media">
@@ -36,8 +37,8 @@
           </b-button>
           <b-button type="is-warning is-light" inverted icon-left="calendar-range">{{advertisement.purchased_by_count}}/{{advertisement.quantity}} Booked</b-button>
 
-          <b-button :loading="favoriteLoading" v-if="advertisement.is_favorite" type="is-primary" @click="toggleFavoriteAdvertisement(advertisement)" icon-left="heart">Remove Favorite</b-button>
-          <b-button :loading="favoriteLoading" v-else type="is-primary" @click="toggleFavoriteAdvertisement(advertisement)" icon-left="heart-outline">Favorite</b-button>
+          <b-button :loading="favoriteLoading" v-if="advertisement.is_favorite" type="is-primary" @click.self="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart">Remove Favorite</b-button>
+          <b-button :loading="favoriteLoading" v-else type="is-primary" @click.self="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart-outline">Favorite</b-button>
           <b-button @click="purchase(advertisement)">Purchase</b-button>
 
 
@@ -45,6 +46,7 @@
       </div>
     </div>
   </div>
+  </nuxt-link>
 
 </template>
 
@@ -55,7 +57,8 @@ export default {
   props: ['advertisement', 'favoriteLoading'],
   mixins: [appMixin],
   methods: {
-    toggleFavoriteAdvertisement(advertisement) {
+    toggleFavoriteAdvertisement($event, advertisement) {
+        $event.stopImmediatePropagation()
         this.$emit('toggle-favorite', advertisement)
     },
     purchase(advertisement) {
@@ -74,7 +77,8 @@ export default {
         })
 
 
-    }
+    },
+
   }
 }
 </script>

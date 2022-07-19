@@ -1,4 +1,5 @@
 <template>
+  <nuxt-link :to="`/app/vendor/advertisements/${advertisement.id}`">
   <div class="card">
     <div class="card-content" >
       <div class="media">
@@ -60,6 +61,7 @@
       </div>
     </div>
   </div>
+  </nuxt-link>
 </template>
 
 <script>

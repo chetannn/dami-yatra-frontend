@@ -55,8 +55,13 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     '@nuxtjs/dotenv',
-    '@nuxtjs/dayjs'
+    '@nuxtjs/dayjs',
   ],
+  dayjs: {
+    plugins: [
+      'relativeTime'
+    ]
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

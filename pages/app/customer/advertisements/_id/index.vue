@@ -164,25 +164,8 @@
             size="is-small">
           </b-icon> Discussions</p>
 
-        <article :key="discussion.id" v-for="discussion in discussions" class="media">
-          <figure class="media-left">
-            <p class="image is-64x64">
-              <img src="https://bulma.io/images/placeholders/128x128.png">
-            </p>
-          </figure>
-          <div class="media-content">
-            <div class="content">
-                <strong>Barbara Middleton</strong>
-               <div>
-                 <p>{{discussion.message}}</p>
-                 <div>
-                   <small><a>Like</a> · 3 hrs</small>
-                 </div>
-               </div>
-            </div>
+      <Discussion :discussions="discussions" />
 
-          </div>
-        </article>
 
         <article class="media">
           <figure class="media-left">
@@ -205,64 +188,7 @@
         </article>
         </div>
       </section>
-      <footer class="section">
-        <div class="container">
-          <div class="columns is-multiline content has-text-centered" style="border-bottom: 1px solid #dee2e6;background-color: white">
-            <div class="column is-12 content has-text-centered">
-              <a class="mb-4 is-inline-block" href="#">
-                <img class="image" src="bulma-plain-assets/logos/plainb-logo.svg" alt="" width="96px">
-              </a>
-              <p class="has-text-grey-dark mb-6 ">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              <div class="buttons is-centered">
-                <a class="button is-primary is-inverted" href="#">About Us </a>
-                <a class="button is-primary is-inverted" href="#">Login</a>
-                <a class="button is-primary is-inverted" href="#">Registration</a>
-                <a class="button is-primary is-inverted" href="#"></a>
-              </div>
-              <div>
-                <a class="mr-3 is-inline-block" href="#">
-                  <b-icon
-                    icon="instagram"
-                    size="is-medium"
-                    type="is-primary">
-                  </b-icon>
-                </a>
-                <a class="mr-3 is-inline-block" href="#">
-                  <b-icon
-                    icon="git"
-                    size="is-medium"
-                    type="is-primary">
-                  </b-icon>
-                </a>
-                <a class="mr-3 is-inline-block" href="#">
-                  <b-icon
-                    icon="facebook"
-                    size="is-medium"
-                    type="is-primary">
-                  </b-icon>
-                </a>
-                <a class="mr-3 is-inline-block" href="#">
-                  <b-icon
-                    icon="linkedin"
-                    size="is-medium"
-                    type="is-primary">
-                  </b-icon>
-                </a>
-                <a class="is-inline-block" href="#">
-                  <b-icon
-                    icon="twitter"
-                    size="is-medium"
-                    type="is-primary">
-                  </b-icon>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="pt-5 has-text-centered">
-            <p>All rights reserved © Dami Yatra 2022</p>
-          </div>
-        </div>
-      </footer> <!-- this is where the footer end-->
+
     </section>
   </div>
 
@@ -270,7 +196,10 @@
 
 
 <script>
+import Discussion from "@/components/discussion/Discussion"
+
 export default {
+  components: {Discussion},
   middleware: ['auth', 'verified', 'customer'],
   layout: 'customer',
   computed: {
@@ -292,9 +221,12 @@ export default {
         message: this.message
       })
       this.message = ''
+
+      await this.getAll()
+
     },
     async getAll() {
-       const response = await this.$axios.get('/api/customer/advertisement-discussions')
+       const response = await this.$axios.get(`/api/customer/advertisement-discussions/${this.$route.params.id}`)
        this.discussions = response.data
     }
   },
