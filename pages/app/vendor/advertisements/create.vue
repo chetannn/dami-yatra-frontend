@@ -243,7 +243,7 @@ export default {
         price: null,
         duration: null,
         cover_image: null,
-        tour_start_date: null,
+        tour_start_date: new Date(),
         quantity: null,
         status: 0,
         featured: 0

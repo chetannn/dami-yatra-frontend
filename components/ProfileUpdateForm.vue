@@ -67,7 +67,6 @@ export default {
     async submit() {
       this.isLoading = true
       try {
-          await this.$axios.get('/sanctum/csrf-cookie')
 
         let name = this.form.name
         let formData = new FormData()
