@@ -125,8 +125,7 @@
 
 
                   <div class="content">
-                    !lorem dfslkj sdf gslkdfg slkdfg jsldkf glskdfj gskdf jglsdkfg jlskdfj glskd fglksdf gslkdf gjlskdf jglskdfg jlskdfjg lskdfg ;sldkfgj ;sldfgkj ;sldfkg slkdfjg lskdfjgldfkjglkdsfjgkldsfjgklsd fglksdfgj lksdfjgkldfj gsldkfg sdlkgf <a>view more</a>
-                    <div class="background-icon"><span class="icon-twitter"></span></div>
+                    Nagarkot is a village in central Nepal, at the rim of the Kathmandu Valley. It’s known for its views of the Himalayas, including Mount Everest to the northeast, which are especially striking at sunrise and sunset. The surrounding scrubland is laced with trails and home to many butterflies.                    <div class="background-icon"><span class="icon-twitter"></span></div>
                   </div>
 
                   <div class="level">
