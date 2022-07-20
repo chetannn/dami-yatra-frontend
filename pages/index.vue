@@ -1,8 +1,4 @@
-
-<!--<head>-->
-<!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">-->
-<!--</head>-->
-<template xmlns="http://www.w3.org/1999/html">
+<template>
   <div class="op">
   <section>
 <nav class="navbar has-shadow is-white">
@@ -19,8 +15,8 @@
 
   <div class="navbar-menu" id="nav-links">
     <div class="navbar-end">
-      <a class="navbar-item">Login</a>
-      <a class="navbar-item">Register</a>
+      <nuxt-link to="/login" class="navbar-item">Login</nuxt-link>
+      <nuxt-link to="/register" class="navbar-item">Register</nuxt-link>
 
     </div>
   </div>
@@ -244,7 +240,9 @@
 
 export default {
   data() {
-    name: "index"
+    return {
+
+    }
   },
 
 

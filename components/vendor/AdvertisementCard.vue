@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="`/app/vendor/advertisements/${advertisement.id}`">
+
   <div class="card">
     <div class="card-content" >
       <div class="media">
@@ -10,7 +10,10 @@
         </div>
 
         <div class="media-content" >
+
+          <nuxt-link :to="`/app/vendor/advertisements/${advertisement.id}`">
           <p class="title is-4">{{advertisement.title}}</p>
+          </nuxt-link>
           <p class="subtitle is-6">Rs {{advertisement.price}}
             (
             <b-icon
@@ -61,7 +64,6 @@
       </div>
     </div>
   </div>
-  </nuxt-link>
 </template>
 
 <script>
