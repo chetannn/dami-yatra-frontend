@@ -8,6 +8,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
+      <AppError :errors="errors" v-model="showError" />
       <form @submit.prevent="submit">
       <b-steps
         v-model="activeStep"
@@ -190,7 +191,7 @@
             <hr />
               <b-field grouped>
                 <div class="control">
-                  <b-button native-type="submit" type="is-primary"
+                  <b-button @click="publish" type="is-primary"
                   >Publish</b-button>
                   <b-button @click="saveAsDraft">Save as draft</b-button>
                 </div>
@@ -231,6 +232,7 @@ export default {
       meals: [],
       activities: [],
       isLoading: false,
+      showError: false,
       errors: [],
       form: {
         title: null,
@@ -340,7 +342,7 @@ export default {
       catch(error) {
 
         if (error.response.status !== 422) throw error
-        // this.showError = true
+        this.showError = true
         this.errors = Object.values(error.response.data.errors).flat();
         this.isLoading = false
 

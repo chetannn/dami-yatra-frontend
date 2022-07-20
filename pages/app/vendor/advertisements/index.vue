@@ -18,7 +18,11 @@
         </div>
 
       </b-tab-item>
-      <b-tab-item label="Published" icon="playlist-check"></b-tab-item>
+      <b-tab-item label="Published" icon="playlist-check">
+        <div class="mb-4"  v-for="(advertisement) in advertisements" :key="advertisement.id">
+          <AdvertisementCard :advertisement="advertisement" @delete-advertisement="deleteAdvertisement" />
+        </div>
+      </b-tab-item>
       <b-tab-item label="Draft" icon="format-list-checkbox">
         <div class="mb-4"  v-for="(advertisement) in advertisements" :key="advertisement.id">
           <AdvertisementCard :advertisement="advertisement" @delete-advertisement="deleteAdvertisement" />
