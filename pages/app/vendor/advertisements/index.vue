@@ -11,19 +11,20 @@
     <section class="section is-main-section">
 
   <div class="column">
-    <b-tabs v-model="activeTab" @input="onTabChange" type="is-toggle" expanded>
-      <b-tab-item label="All" icon="clipboard-list-outline">
-        <div class="mb-4"  v-for="(advertisement) in advertisements" :key="advertisement.id">
-          <AdvertisementCard :advertisement="advertisement" @delete-advertisement="deleteAdvertisement" />
-        </div>
-
-      </b-tab-item>
+    <b-tabs :has-navigation="true" icon-prev="chevron-left" icon-next="chevron-right" label-position="bottom" v-model="activeTab" @input="onTabChange" type="is-toggle" expanded>
       <b-tab-item label="Published" icon="playlist-check">
         <div class="mb-4"  v-for="(advertisement) in advertisements" :key="advertisement.id">
           <AdvertisementCard :advertisement="advertisement" @delete-advertisement="deleteAdvertisement" />
         </div>
       </b-tab-item>
-      <b-tab-item label="Draft" icon="format-list-checkbox">
+
+      <b-tab-item label="Drafts" icon="clipboard-list-outline">
+        <div class="mb-4"  v-for="(advertisement) in advertisements" :key="advertisement.id">
+          <AdvertisementCard :advertisement="advertisement" @delete-advertisement="deleteAdvertisement" />
+        </div>
+      </b-tab-item>
+
+      <b-tab-item label="Archived" icon="format-list-checkbox">
         <div class="mb-4"  v-for="(advertisement) in advertisements" :key="advertisement.id">
           <AdvertisementCard :advertisement="advertisement" @delete-advertisement="deleteAdvertisement" />
         </div>
@@ -110,16 +111,18 @@ export default {
     },
    async onTabChange(value) {
       if(value === 0) {
-        delete this.params.status
-      }
-
-      if(value === 1) {
         this.params.status = 1
       }
 
-      if(value === 2) {
+      if(value === 1) {
         this.params.status = 0
       }
+
+      if(value === 2) {
+        this.params.status = 3
+      }
+
+      this.params.page = this.current_page
 
       await this.getAll(this.params)
 
@@ -129,18 +132,19 @@ export default {
         container: null
       })
 
-      await this.getAll();
+      await this.getAll({
+         page: this.current_page
+      });
 
       loadingComponent.close()
     },
-    async getAll(params = {}) {
+    async getAll(params = { status: 1 }) {
 
-      params.current_page = this.current_page
-      this.params = params
+      this.params = { ...this.params, ...params  }
 
       const qs = new URLSearchParams(this.params)
 
-      const response = await this.$axios.get(`/api/vendor/advertisements?page=${qs.toString()}`)
+      const response = await this.$axios.get(`/api/vendor/advertisements?${qs.toString()}`)
       this.advertisements = response.data.data
       this.total = response.data.total
       this.current_page = response.data.current_page

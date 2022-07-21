@@ -3,13 +3,12 @@
     <title-bar :title-stack="titleStack" />
     <hero-bar>
        Create Advertisement
-      <nuxt-link slot="right" to="/" class="button">
-        Dashboard
+      <nuxt-link slot="right" to="/app/vendor/advertisements" class="button">
+        Back
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
       <AppError :errors="errors" v-model="showError" />
-      <form @submit.prevent="submit">
       <b-steps
         v-model="activeStep"
         :has-navigation="false"
@@ -88,7 +87,7 @@
             </b-field>
 
             <b-field label="Tour Start Date" horizontal>
-              <b-datepicker v-model="form.tour_start_date" />
+              <flat-picker class="input" :config="{ wrap: true }" v-model="form.tour_start_date"></flat-picker>
             </b-field>
 
 
@@ -157,6 +156,19 @@
             </b-upload>
           </b-field>
 
+            <b-field v-if="form.cover_image" horizontal>
+              <div class="tags" v-if="form.cover_image">
+            <span
+              class="tag is-primary" >
+                {{form.cover_image.name}}
+                <button class="delete is-small"
+                        type="button"
+                >
+                </button>
+            </span>
+              </div>
+            </b-field>
+
 
             <b-field label="File" horizontal>
               <file-picker v-model="form.itinerary_file" />
@@ -201,7 +213,6 @@
 
         </b-step-item>
       </b-steps>
-      </form>
     </section>
   </div>
 </template>
@@ -212,6 +223,8 @@ import HeroBar from '@/components/HeroBar'
 import AppError from '@/components/AppError'
 import AdvertisementForm from '@/components/vendor/AdvertisementForm'
 
+
+
 export default {
   layout: 'vendor',
   middleware: ['auth', 'verified', 'vendor'],
@@ -220,7 +233,7 @@ export default {
     HeroBar,
     TitleBar,
     AppError,
-    AdvertisementForm
+    AdvertisementForm,
   },
   data() {
     return {
@@ -243,7 +256,7 @@ export default {
         price: null,
         duration: null,
         cover_image: null,
-        tour_start_date: new Date(),
+        tour_start_date: null,
         quantity: null,
         status: 0,
         featured: 0
@@ -349,6 +362,9 @@ export default {
       }
 
     },
+  },
+  mounted() {
+    // this.form.tour_start_date = new Date()
   },
   head() {
     return {
