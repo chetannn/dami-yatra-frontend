@@ -69,6 +69,11 @@
 
               <div class="buttons">
                 <b-button
+
+                  type="is-warning"
+                  @click="downloadFile"
+                  icon-left="heart-outline" outlined/>
+                <b-button
                   label="Itinerary"
                   type="is-link"
                   @click="downloadFile"

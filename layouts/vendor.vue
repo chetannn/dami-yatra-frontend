@@ -49,7 +49,7 @@ export default {
           {
             to: '/app/vendor/featured-payments',
             label: 'Featured Payments',
-            icon: 'table'
+            icon: 'playlist-star'
           },
           // {
           //   to: '/forms',
