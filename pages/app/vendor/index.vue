@@ -8,26 +8,80 @@
       <tiles>
         <card-widget
           class="tile is-child"
-          type="is-primary"
+          type="is-link"
           icon="account-multiple"
           :number="512"
-          label="Clients"
+          label="Customers"
         />
         <card-widget
           class="tile is-child"
-          type="is-info"
-          icon="cart-outline"
+          type="is-link"
+          icon="cash"
+          :number="7770"
+          prefix=""
+          label="Total Revenue"
+        />
+        <card-widget
+          class="tile is-child"
+          type="is-link"
+          icon="cash-100"
           :number="7770"
           prefix="$"
-          label="Sales"
+          label="Total Tax"
         />
         <card-widget
           class="tile is-child"
-          type="is-success"
+          type="is-link"
           icon="chart-timeline-variant"
           :number="256"
           suffix="%"
           label="Performance"
+        />
+        <card-widget
+          class="tile is-child"
+          type="is-link"
+          icon="ticket"
+          :number="256"
+          label="Coupans"
+        />
+        <card-widget
+          class="tile is-child"
+          type="is-link"
+          icon="eye"
+          :number="256"
+          label="Views"
+        />
+        <card-widget
+          class="tile is-child"
+          type="is-link"
+          icon="monitor"
+          :number="256"
+          suffix=" ads"
+          label="Active Advertisement"
+        />
+        <card-widget
+          class="tile is-child"
+          type="is-link"
+          icon="monitor"
+          :number="256"
+          suffix=" ads"
+          label="Expired Advertisement"
+        />
+        <card-widget
+          class="tile is-child"
+          type="is-link"
+          icon="monitor"
+          :number="256"
+          suffix=" ads"
+          label="Draft Advertisement"
+        />
+        <card-widget
+          class="tile is-child"
+          type="is-link"
+          icon="monitor"
+          :number="256"
+          suffix=" ads"
+          label="Featured Advertisement"
         />
       </tiles>
 
