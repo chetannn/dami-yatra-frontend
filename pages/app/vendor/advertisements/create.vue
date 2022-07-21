@@ -136,7 +136,47 @@
 
         </b-step-item>
 
-        <b-step-item step="3" label="Documents" :clickable="true">
+        <b-step-item step="3" label="Includes & Excludes" :clickable="true">
+          <card-component title="Includes">
+            <div class="columns is-half">
+              <div class="column">
+                <b-input v-model="accommodation" type="text" placeholder="Type includes" />
+                <b-button class="mt-2" @click="addAccommodation" size="is-small" type="is-primary">Add</b-button>
+              </div>
+              <div class="column">
+                here
+              </div>
+            </div>
+
+
+          </card-component>
+
+          <card-component title="Excludes">
+            <div class="columns is-half">
+              <div class="column">
+                <b-input v-model="accommodation" type="text" placeholder="Type includes" />
+                <b-button class="mt-2" @click="addAccommodation" size="is-small" type="is-primary">Add</b-button>
+              </div>
+              <div class="column">
+                here
+              </div>
+            </div>
+          </card-component>
+
+          <card-component title="Major Cities">
+            <div class="columns is-half">
+              <div class="column">
+                <b-input v-model="accommodation" type="text" placeholder="Type includes" />
+                <b-button class="mt-2" @click="addAccommodation" size="is-small" type="is-primary">Add</b-button>
+              </div>
+              <div class="column">
+                here
+              </div>
+            </div>
+          </card-component>
+        </b-step-item>
+
+        <b-step-item step="4" label="Documents" :clickable="true">
 
           <card-component title="Documents and Images" icon="ballot">
 
@@ -179,7 +219,7 @@
 
         </b-step-item>
 
-        <b-step-item step="4" label="Publish" :clickable="true">
+        <b-step-item step="5" label="Publish" :clickable="true">
           <b-message type="is-info" has-icon>
             Note: First you need to publish or save the advertisement as draft inorder to feature it.
           </b-message>
@@ -251,6 +291,9 @@ export default {
       showError: false,
       errors: [],
       advertisementId: null,
+      includes: [],
+      excludes: [],
+      major_cities: [],
       form: {
         title: null,
         description: null,
@@ -368,6 +411,18 @@ export default {
 
         if(this.accommodations.length > 0) {
           this.accommodations.forEach( accommodation => formData.append('accommodations[]', accommodation))
+        }
+
+        if(this.includes.length > 0) {
+          this.includes.forEach(include => formData.append('includes[]', include))
+        }
+
+        if(this.excludes.length > 0) {
+          this.excludes.forEach( exclude => formData.append('excludes[]', exclude))
+        }
+
+        if(this.major_cities.length > 0) {
+          this.major_cities.forEach( majorCity => formData.append('major_cities[]', majorCity))
         }
 
         formData.append('featured', this.form.featured)

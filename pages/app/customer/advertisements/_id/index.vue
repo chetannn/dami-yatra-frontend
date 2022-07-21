@@ -217,6 +217,40 @@
       </div>
     </section>
 
+    <section class="section">
+      <div class="container">
+        <p class="title is-3">
+          <b-icon
+            icon="star-circle"
+            size="is-small">
+          </b-icon> Discussions</p>
+
+        <Discussion :discussions="discussions" />
+
+
+        <article class="media">
+          <figure class="media-left">
+            <p class="image is-64x64">
+              <img class="is-rounded" :src="$auth.user.profile_picture_url">
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="field">
+              <p class="control">
+                <textarea v-model="message" class="textarea" placeholder="Add a comment..."></textarea>
+              </p>
+            </div>
+            <div class="field">
+              <p class="control">
+                <button @click="postComment" class="button">Post comment</button>
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+
     <!-- cards -->
     <section class="section is-hidden-mobile">
       <div class="container">
