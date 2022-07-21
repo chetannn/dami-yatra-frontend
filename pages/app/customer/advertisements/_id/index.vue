@@ -61,6 +61,10 @@
             <p class="mb-4">{{advertisement.description}}</p>
             <div class="is-size-4 mb-4">रु {{advertisement.price}}</div>
 
+           <b-field>
+             <b-input  placeholder="Coupon Code" />
+           </b-field>
+
             <form>
 
               <div class="buttons">
@@ -106,8 +110,8 @@
                       size="is-small">
                     </b-icon> Activities</p>
                   <p class="subtitle is-6">
-                  <ul v-for="activity in advertisement.activities">
-                    <li>{{activity}}</li>
+                  <ul>
+                    <li v-for="activity in advertisement.activities">{{activity}}</li>
                   </ul>
                   </p>
 
@@ -119,8 +123,8 @@
                       size="is-small">
                     </b-icon> Accomodations</p>
                   <p class="subtitle is-6">
-                    <ul v-for="accommodation in advertisement.accommodations">
-                    <li>{{accommodation}}</li>
+                    <ul>
+                    <li v-for="accommodation in advertisement.accommodations">{{accommodation}}</li>
                    </ul>
                   </p>
                 </div>
@@ -132,8 +136,8 @@
                       size="is-small">
                     </b-icon> Meals</p>
                   <p class="subtitle is-6">
-                  <ul v-for="meal in advertisement.meals">
-                    <li>{{meal}}</li>
+                  <ul>
+                    <li v-for="meal in advertisement.meals">{{meal}}</li>
                   </ul>
                   </p>
                 </div>
@@ -363,9 +367,10 @@
 
 <script>
 import Discussion from "@/components/discussion/Discussion"
+import ApplyCouponModal from "@/components/customer/ApplyCouponModal";
 
 export default {
-  components: {Discussion},
+  components: {Discussion, ApplyCouponModal},
   middleware: ['auth', 'verified', 'customer'],
   layout: 'customer',
   computed: {
@@ -382,6 +387,15 @@ export default {
     }
   },
   methods: {
+    openApplyCouponDialog() {
+      this.$buefy.modal.open({
+        parent: this,
+        component: ApplyCouponModal,
+        hasModalCard: true,
+        customClass: 'custom-class custom-class-2',
+        trapFocus: true
+      })
+    },
     purchase(advertisement) {
       this.$khalti({
         amount: this.advertisement.price * 100,

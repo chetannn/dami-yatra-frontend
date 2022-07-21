@@ -347,7 +347,10 @@ export default {
         formData.append('cover_image', this.form.cover_image)
         formData.append('title', this.form.title)
         formData.append('description', this.form.description)
-        formData.append('tags[]', this.form.tags)
+
+        if(this.form.tags.length > 0) {
+           this.form.tags.forEach(tag => formData.append('tags[]', tag))
+        }
         formData.append('price', this.form.price)
         formData.append('duration', this.form.duration)
         formData.append('ad_end_date', this.form.ad_end_date)
@@ -356,15 +359,15 @@ export default {
         formData.append('status', this.form.status)
 
         if(this.meals.length > 0) {
-          formData.append('meals[]', this.meals)
+          this.meals.forEach(meal => formData.append('meals[]', meal))
         }
 
         if(this.activities.length > 0) {
-          formData.append('activities[]', this.activities)
+          this.activities.forEach(activity => formData.append('activities[]', activity))
         }
 
         if(this.accommodations.length > 0) {
-          formData.append('accommodations[]', this.accommodations)
+          this.accommodations.forEach( accommodation => formData.append('accommodations[]', accommodation))
         }
 
         formData.append('featured', this.form.featured)

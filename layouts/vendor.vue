@@ -46,6 +46,11 @@ export default {
             label: 'Customer Payments',
             icon: 'table'
           },
+          {
+            to: '/app/vendor/featured-payments',
+            label: 'Featured Payments',
+            icon: 'table'
+          },
           // {
           //   to: '/forms',
           //   label: 'Forms',
