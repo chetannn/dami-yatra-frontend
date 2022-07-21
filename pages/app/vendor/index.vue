@@ -37,46 +37,43 @@
         header-icon="reload"
         @header-icon-click="fillChartData"
       >
-<!--        <div v-if="defaultChart.chartData" class="chart-area">-->
-<!--          <line-chart-->
-<!--            ref="bigChart"-->
-<!--            style="height: 100%;"-->
-<!--            chart-id="big-line-chart"-->
-<!--            :chart-data="defaultChart.chartData"-->
-<!--            :extra-options="defaultChart.extraOptions"-->
-<!--          >-->
-<!--          </line-chart>-->
-<!--        </div>-->
+        <div v-if="defaultChart.chartData" class="chart-area">
+          <line-chart
+            ref="bigChart"
+            style="height: 100%;"
+            chart-id="big-line-chart"
+            :chart-data="defaultChart.chartData"
+            :extra-options="defaultChart.extraOptions"
+          >
+          </line-chart>
+        </div>
       </card-component>
 
       <card-component title="Clients" class="has-table has-mobile-sort-spaced">
-        <clients-table-sample
-          :data-url="`${$router.options.base}data-sources/clients.json`"
-        />
+<!--        <clients-table-sample-->
+<!--          :data-url="`${$router.options.base}data-sources/clients.json`"-->
+<!--        />-->
       </card-component>
     </section>
   </div>
 </template>
 
 <script>
-// export default {
-//    middleware: ['auth', 'verified', 'vendor'],
-//   layout: 'vendor'
-// }
-// @ is an alias to /src
-
-// import * as chartConfig from '@/components/Charts/chart.config'
+import * as chartConfig from '@/components/Charts/chart.config'
 import TitleBar from '@/components/TitleBar'
 import HeroBar from '@/components/HeroBar'
 import Tiles from '@/components/Tiles'
 import CardWidget from '@/components/CardWidget'
 import CardComponent from '@/components/CardComponent'
 import LineChart from '@/components/Charts/LineChart'
-import ClientsTableSample from '@/components/ClientsTableSample'
+ // import ClientsTableSample from '@/components/ClientsTableSample'
+
 export default {
   name: 'Home',
+  middleware: ['auth', 'verified', 'vendor'],
+  layout: 'vendor',
   components: {
-    ClientsTableSample,
+    // ClientsTableSample,
     LineChart,
     CardComponent,
     CardWidget,
