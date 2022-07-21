@@ -31,8 +31,6 @@
         <ul class="container is-size-6">
           <li><a class="has-text-grey">Techie Coffee</a></li>
           <li><a class="has-text-grey">Shop</a></li>
-          <!-- <li><a class="has-text-warning-dark">Techie Coffee</a></li>
-          <li><a class="has-text-warning-dark">Shop</a></li> -->
           <li class="is-active"><a>Docker Dark Roast</a></li>
         </ul>
       </nav>
@@ -57,22 +55,16 @@
             <div class="is-size-4 mb-4">रु {{advertisement.price}}</div>
             <p class="mb-4">By {{advertisement.vendor.name}}</p>
             <form>
-<!--              <div class="control my-5">-->
-<!--                <div class="select is-dark">-->
-<!--                  <select>-->
-<!--                    <option>Small (250g)</option>-->
-<!--                    <option>Medium (500g)</option>-->
-<!--                    <option>Large (750g)</option>-->
-<!--                  </select>-->
-<!--                </div>-->
-<!--              </div>-->
+
               <div class="buttons">
                 <b-button
                   label="Itinerary"
                   type="is-link"
+                  @click="downloadFile"
                   icon-left="download" outlined/>
                 <b-button
                   label="Buy"
+                  @click="purchase"
                   type="is-link"
                   icon-left="cash" />
               </div>
@@ -297,11 +289,6 @@
             <button class="button is-dark px-5 is-medium" id="success-modal">Join</button>
           </div>
         </form>
-        <!-- <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto facere delectus officiis laudantium blanditiis ipsa sit, veritatis fugiat laboriosam eos. Dignissimos error voluptates aliquam molestias harum, fugit doloribus officiis libero.</p> <hr>
-        <div class="has-text-right mt-3">
-            <button class="button" id="cancel-modal">Cancel</button>
-            <button class="button is-dark" id="success-modal">Join</button>
-        </div> -->
       </div>
     </div>
     <footer class="section">
@@ -388,6 +375,25 @@ export default {
     }
   },
   methods: {
+    purchase(advertisement) {
+      this.$khalti({
+        amount: this.advertisement.amount * 100,
+        eventHandler: {
+          onSuccess: async (response) => {
+            await this.$axios.post('/api/customer/pay', {
+              amount: this.advertisement.amount * 100,
+              advertisement_id: advertisement.id,
+              token: response.token
+            });
+          }
+        }
+
+      })
+
+    },
+    downloadFile() {
+      window.open(this.advertisement.itinerary_file_url, '_blank')
+    },
     async postComment() {
       await this.$axios.post('/api/customer/advertisement-discussions', {
         advertisement_id: this.$route.params.id,

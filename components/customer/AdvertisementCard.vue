@@ -45,14 +45,12 @@
 
           <b-button :loading="favoriteLoading" v-if="advertisement.is_favorite" type="is-primary" @click.self="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart">Remove Favorite</b-button>
           <b-button :loading="favoriteLoading" v-else type="is-primary" @click.self="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart-outline">Favorite</b-button>
-          <b-button @click="purchase(advertisement)">Purchase</b-button>
 
 
         </div>
       </div>
     </div>
   </div>
-  </nuxt-link>
 
 </template>
 
@@ -64,27 +62,8 @@ export default {
   mixins: [appMixin],
   methods: {
     toggleFavoriteAdvertisement($event, advertisement) {
-        $event.stopImmediatePropagation()
         this.$emit('toggle-favorite', advertisement)
     },
-    purchase(advertisement) {
-        this.$khalti({
-          amount: 20 * 100,
-          eventHandler: {
-            onSuccess: async (response) => {
-              await this.$axios.post('/api/customer/pay', {
-                amount: 20 * 100,
-                advertisement_id: advertisement.id,
-                token: response.token
-              });
-            }
-          }
-
-        })
-
-
-    },
-
   }
 }
 </script>
