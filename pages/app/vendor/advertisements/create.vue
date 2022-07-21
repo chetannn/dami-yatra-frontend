@@ -140,11 +140,13 @@
           <card-component title="Includes">
             <div class="columns is-half">
               <div class="column">
-                <b-input v-model="accommodation" type="text" placeholder="Type includes" />
-                <b-button class="mt-2" @click="addAccommodation" size="is-small" type="is-primary">Add</b-button>
+                <b-input v-model="include" type="text" placeholder="Type includes" />
+                <b-button class="mt-2" @click="addInclude" size="is-small" type="is-primary">Add</b-button>
               </div>
               <div class="column">
-                here
+                <ul>
+                  <li v-for="(include, index) in includes">{{include}}</li>
+                </ul>
               </div>
             </div>
 
@@ -154,11 +156,13 @@
           <card-component title="Excludes">
             <div class="columns is-half">
               <div class="column">
-                <b-input v-model="accommodation" type="text" placeholder="Type includes" />
-                <b-button class="mt-2" @click="addAccommodation" size="is-small" type="is-primary">Add</b-button>
+                <b-input v-model="exclude" type="text" placeholder="Type includes" />
+                <b-button class="mt-2" @click="addExclude" size="is-small" type="is-primary">Add</b-button>
               </div>
               <div class="column">
-                here
+                <ul>
+                  <li v-for="(exclude, index) in excludes">{{exclude}}</li>
+                </ul>
               </div>
             </div>
           </card-component>
@@ -166,11 +170,13 @@
           <card-component title="Major Cities">
             <div class="columns is-half">
               <div class="column">
-                <b-input v-model="accommodation" type="text" placeholder="Type includes" />
-                <b-button class="mt-2" @click="addAccommodation" size="is-small" type="is-primary">Add</b-button>
+                <b-input v-model="city" type="text" placeholder="Type includes" />
+                <b-button class="mt-2" @click="addCity" size="is-small" type="is-primary">Add</b-button>
               </div>
               <div class="column">
-                here
+                <ul>
+                  <li v-for="(city, index) in major_cities">{{city}}</li>
+                </ul>
               </div>
             </div>
           </card-component>
@@ -284,6 +290,9 @@ export default {
       accommodation: '',
       meal: '',
       activity: '',
+      include: '',
+      exclude: '',
+      city: '',
       accommodations: [],
       meals: [],
       activities: [],
@@ -342,6 +351,28 @@ export default {
         }
 
       })
+    },
+
+    addInclude() {
+      this.includes.push(this.include)
+      this.include = ''
+    },
+    removeInclude(index) {
+      this.includes.splice(index, 1)
+    },
+    addExclude() {
+      this.excludes.push(this.exclude)
+      this.exclude = ''
+    },
+    removeExclude(index) {
+      this.excludes.splice(index, 1)
+    },
+    addCity() {
+      this.major_cities.push(this.city)
+      this.city = ''
+    },
+    removeCity(index) {
+      this.major_cities.splice(index, 1)
     },
     addAccommodation() {
       this.accommodations.push(this.accommodation)

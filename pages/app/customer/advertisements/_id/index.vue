@@ -51,9 +51,7 @@
 
               <nav class="breadcrumb has-bullet-separator px-0">
                 <ul class="container is-size-7 px-0">
-                  <li><a class="has-text-grey">City 1</a></li>
-                  <li><a class="has-text-grey">City 2</a></li>
-                  <li class="is-active"><a>City 3</a></li>
+                  <li :key="index" v-for="(city, index) in advertisement.major_cities"><a class="has-text-grey">{{city}}</a></li>
                 </ul>
               </nav>
             <p class="mb-4">By <span text-is-link>{{advertisement.vendor.name}}</span></p>
@@ -171,26 +169,21 @@
 
           <div class="column is-7-tablet">
             <!-- tabbed content -->
-            <div class="tabs is-boxed">
-              <ul>
-                <li class="is-active" data-target="product-details">
-                  <a>Includes</a>
-                </li>
-                <li data-target="delivery-info">
-                  <a>Excludes</a>
-                </li>
-              </ul>
-            </div>
-            <div class="px-2" id="tab-content">
-              <div id="product-details">
-                <h3 class="is-size-5 title">Includes</h3>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem nemo commodi ipsum iusto minima natus aliquid harum distinctio consequuntur perspiciatis, tempore expedita fugiat neque soluta! Dolores eius eaque dolor voluptatibus!</p>
-              </div>
-              <div class="is-hidden" id="delivery-info">
-                <h3 class="is-size-5 title">Excludes</h3>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem nemo commodi ipsum iusto minima natus aliquid harum distinctio consequuntur perspiciatis, tempore expedita fugiat neque soluta! Dolores eius eaque dolor voluptatibus!</p>
-              </div>
-            </div>
+            <b-tabs type="is-boxed" v-model="activeTab">
+              <b-tab-item label="Includes">
+                <ul>
+                  <li :key="index" v-for="(include, index) in advertisement.includes">{{include}}</li>
+                </ul>
+              </b-tab-item>
+
+              <b-tab-item label="Excludes">
+                <ul>
+                  <li :key="index" v-for="(exclude, index) in advertisement.excludes">{{exclude}}</li>
+                </ul>
+              </b-tab-item>
+
+            </b-tabs>
+
           </div>
           <div class="column is-5-tablet">
             <!-- message box -->
@@ -422,7 +415,8 @@ export default {
     return {
       discussions: [],
       advertisement: null,
-      message: ''
+      message: '',
+      activeTab: 0
     }
   },
   methods: {
