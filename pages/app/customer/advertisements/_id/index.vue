@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div v-if="$fetchState.pending">Loading...</div>
+  <div v-else>
     <title-bar :title-stack="titleStack" />
     <hero-bar>
       Annapurna Trek
@@ -42,7 +43,7 @@
       <div class="container">
         <div class="columns is-vcentered is-multiline">
           <div class="column is-6-tablet is-5-desktop has-text-centered">
-            <img src="https://static.toiimg.com/photo/67321906/kathmandu.jpg?width=740&resize=4" alt="Docker Coffee Image">
+            <img :src="advertisement.cover_image_url" :alt="advertisement.title">
           </div>
           <div class="column is-6-tablet is-3-desktop">
 
@@ -52,9 +53,9 @@
           <div class="column is-12-tablet is-4-desktop">
             <h1 class="is-size-3-mobile is-size-1-desktop title">Docker</h1>
             <h2 class="is-size-3-mobile is-size-2-desktop subtitle">Dark Roast</h2>
-            <p class="mb-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam officiis ad illum eligendi provident itaque fuga nihil praesentium dignissimos quos!</p>
-            <div class="is-size-4 mb-4">रु 1129</div>
-            <p class="mb-4">By Chetan Kharel Travels Pvt. Ltd</p>
+            <p class="mb-4">{{advertisement.description}}</p>
+            <div class="is-size-4 mb-4">रु {{advertisement.price}}</div>
+            <p class="mb-4">By {{advertisement.vendor.name}}</p>
             <form>
 <!--              <div class="control my-5">-->
 <!--                <div class="select is-dark">-->
@@ -96,7 +97,7 @@
                       icon="calendar"
                       size="is-small">
                     </b-icon> Duration</p>
-                  <p class="subtitle is-6">10 Night 5 Days</p>
+                  <p class="subtitle is-6">{{advertisement.duration}}</p>
                 </div>
 
                 <div class="media-content">
@@ -106,9 +107,8 @@
                       size="is-small">
                     </b-icon> Activities</p>
                   <p class="subtitle is-6">
-                  <ul>
-                    <li>Dancing</li>
-                    <li>Dancing</li>
+                  <ul v-for="activity in advertisement.activities">
+                    <li>{{activity}}</li>
                   </ul>
                   </p>
 
@@ -119,7 +119,11 @@
                       icon="bed-king"
                       size="is-small">
                     </b-icon> Accomodations</p>
-                  <p class="subtitle is-6">@johnsmith</p>
+                  <p class="subtitle is-6">
+                    <ul v-for="accommodation in advertisement.accommodations">
+                    <li>{{accommodation}}</li>
+                   </ul>
+                  </p>
                 </div>
                 <div class="media-content">
 
@@ -128,7 +132,11 @@
                       icon="food"
                       size="is-small">
                     </b-icon> Meals</p>
-                  <p class="subtitle is-6">@johnsmith</p>
+                  <p class="subtitle is-6">
+                  <ul v-for="meal in advertisement.meals">
+                    <li>{{meal}}</li>
+                  </ul>
+                  </p>
                 </div>
                 <div class="media-content">
 
@@ -137,7 +145,7 @@
                       icon="hiking"
                       size="is-small">
                     </b-icon> Date</p>
-                  <p class="subtitle is-6"> <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time></p>
+                  <p class="subtitle is-6"> <time datetime="2016-1-1">{{$dayjs(advertisement.tour_start_date).format('MMMM D, YYYY')}}</time></p>
                 </div>
               </div>
             </div>
@@ -375,6 +383,7 @@ export default {
   data() {
     return {
       discussions: [],
+      advertisement: null,
       message: ''
     }
   },
@@ -392,6 +401,10 @@ export default {
     async getAll() {
        const response = await this.$axios.get(`/api/customer/advertisement-discussions/${this.$route.params.id}`)
        this.discussions = response.data
+    },
+    async getAdDetail() {
+      const response = await this.$axios.get(`/api/customer/advertisements/${this.$route.params.id}`)
+      this.advertisement = response.data
     }
   },
 
@@ -402,8 +415,14 @@ export default {
     })
 
     await this.getAll();
+    // await this.getAdDetail()
 
     loadingComponent.close()
+  },
+
+  async fetch() {
+    const response = await this.$axios.get(`/api/customer/advertisements/${this.$route.params.id}`)
+    this.advertisement = response.data
   },
 }
 </script>

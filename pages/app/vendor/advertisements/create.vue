@@ -180,21 +180,24 @@
         </b-step-item>
 
         <b-step-item step="4" label="Publish" :clickable="true">
+          <b-message type="is-info" has-icon>
+            Note: First you need to publish or save the advertisement as draft inorder to feature it.
+          </b-message>
           <card-component title="Publish">
             <b-field label="Feature this advertisement ?" horizontal>
-              <b-switch v-model="form.featured">
+              <b-switch :disabled="advertisementId === null" v-model="form.featured">
               </b-switch>
             </b-field>
 
             <b-field v-if="form.featured" grouped>
               <div class="control">
-                <b-button  native-type="submit" type="is-primary"
+                <b-button @click="payFeaturedAd(10, 'month')"  type="is-primary"
                 >Pay 1000 for 1 month</b-button>
-                <b-button  native-type="submit" type="is-primary"
+                <b-button @click="payFeaturedAd(30, '3 months')"  type="is-primary"
                 >Pay 3000 for 3 months</b-button>
-                <b-button  native-type="submit" type="is-primary"
+                <b-button @click="payFeaturedAd(60, '6 months')" type="is-primary"
                 >Pay 6000 for 6 months</b-button>
-                <b-button  native-type="submit" type="is-primary"
+                <b-button @click="payFeaturedAd(120, '12 months')" type="is-primary"
                 >Pay 12000 for 12 months</b-button>
               </div>
             </b-field>
@@ -247,6 +250,7 @@ export default {
       isLoading: false,
       showError: false,
       errors: [],
+      advertisementId: null,
       form: {
         title: null,
         description: null,
@@ -269,6 +273,33 @@ export default {
     },
   },
   methods: {
+    payFeaturedAd(amount, type) {
+      this.$khalti({
+        amount: amount * 100,
+        eventHandler: {
+          onSuccess: async (response) => {
+           const resp = await this.$axios.post('/api/vendor/featured-ad-payment', {
+              amount: amount * 100,
+              advertisement_id: this.advertisementId,
+              token: response.token,
+              type
+            });
+
+            this.$buefy.notification.open({
+              type: 'is-success',
+              position: 'is-top',
+              message: resp.data.message,
+              queue: false,
+              duration: 2000,
+              closable: false
+            })
+
+            this.$router.push('/app/vendor/advertisements')
+          }
+        }
+
+      })
+    },
     addAccommodation() {
       this.accommodations.push(this.accommodation)
       this.accommodation = ''
@@ -344,12 +375,17 @@ export default {
           }
         })
 
-        this.$buefy.snackbar.open({
+        this.advertisementId = response.data.id
+
+        this.$buefy.notification.open({
+          type: 'is-success',
+          position: 'is-top',
           message: 'Advertisement created successfully',
           queue: false,
-        }, 2000)
+          duration: 2000,
+          closable: false
+        })
 
-        this.$router.push('/app/vendor/advertisements')
       }
 
       catch(error) {
@@ -364,7 +400,6 @@ export default {
     },
   },
   mounted() {
-    // this.form.tour_start_date = new Date()
   },
   head() {
     return {
