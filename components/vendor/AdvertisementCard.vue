@@ -3,26 +3,24 @@
   <div class="card">
     <div class="card-content" >
       <div class="media">
-        <div class="media-left">
-          <figure class="image is-48x48">
-            <img :src="advertisement.cover_image_url" :alt="advertisement.title">
-          </figure>
-        </div>
-
-        <div class="media-content" >
-
-          <nuxt-link :to="`/app/vendor/advertisements/${advertisement.id}`">
-          <p class="title is-4">{{advertisement.title}}</p>
+        <div class="media-left" >
+          <nuxt-link :to="`/app/customer/advertisements/${advertisement.id}`">
+            <figure class="image is-128x128">
+              <img :src="advertisement.cover_image_url" :alt="advertisement.title">
+            </figure>
           </nuxt-link>
-          <p class="subtitle is-6">Rs {{advertisement.price}}
-            (
-            <b-icon
-              icon="currency-usd"
-              size="is-small"
-              type="is-info">
-            </b-icon>
-
-            )</p>
+        </div>
+        <div class="media-content">
+          <p class="title is-4">
+            {{advertisement.title}}
+          </p>
+          <div class="title is-4 mb-4">
+            रु {{advertisement.price}}
+          </div>
+          <div class="column px-0 is-6">
+            {{advertisement.description}}
+            <br>
+          </div>
         </div>
         <div class="media-right">
           <b-dropdown aria-role="list">
@@ -40,18 +38,23 @@
 
 
             <b-dropdown-item aria-role="listitem">
-              <nuxt-link :to="`/app/vendor/advertisements/edit/${advertisement.id}`">edit</nuxt-link>
+              <nuxt-link :to="`/app/vendor/advertisements/edit/${advertisement.id}`">
+                <b-icon
+                icon="circle-edit-outline"
+                type="is-info"
+                size="is-small">
+              </b-icon>edit</nuxt-link>
             </b-dropdown-item>
-            <b-dropdown-item @click="deleteAdvertisement(advertisement.id)" aria-role="listitem">delete</b-dropdown-item>
+            <b-dropdown-item @click="deleteAdvertisement(advertisement.id)" aria-role="listitem">
+              <b-icon
+              icon="delete-forever-outline"
+              type="is-info"
+              size="is-small">
+            </b-icon>delete</b-dropdown-item>
           </b-dropdown>
         </div>
       </div>
 
-      <div class="content">
-        {{advertisement.description}}
-        <br>
-
-      </div>
       <div class="content">
         <div class="buttons">
           <b-button type="is-info is-light" inverted icon-left="airplane">{{advertisement.duration}}</b-button>

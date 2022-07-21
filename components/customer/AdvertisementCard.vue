@@ -3,36 +3,42 @@
   <div class="card">
     <div class="card-content" >
       <div class="media">
-        <div class="media-left">
-          <figure class="image is-48x48">
-            <img :src="advertisement.vendor.user.profile_picture_url" :alt="advertisement.title">
-          </figure>
-        </div>
-
-        <div class="media-content" >
+        <div class="media-left" >
           <nuxt-link :to="`/app/customer/advertisements/${advertisement.id}`">
+          <figure class="image is-128x128">
+            <img :src="advertisement.cover_image_url" :alt="advertisement.title">
+          </figure>
+          </nuxt-link>
+        </div>
+        <div class="media-content">
           <p class="title is-4">
             {{advertisement.title}}
           </p>
-          </nuxt-link>
-
-
-          <p class="subtitle is-6">Rs {{advertisement.price}}
-            (
-            <b-icon
-              icon="currency-usd"
-              size="is-small"
-              type="is-info">
-            </b-icon>
-
-            )</p>
+          <div class="title is-4 mb-4">
+            रु {{advertisement.price}}
+          </div>
+          <div class="column px-0 is-6">
+            {{advertisement.description}}
+            <br>
+          </div>
         </div>
 
-      </div>
+        <div class="column is-2">
+          <div class="media-content">
+            <figure class="image is-48x48">
+              <img :src="advertisement.vendor.user.profile_picture_url" :alt="advertisement.title">
+            </figure>
+            <div class="column is-12 px-0">
+              Sold by: </br> {{advertisement.vendor.user.name}}
+            </div>
+          </div>
 
-      <div class="content">
-        {{advertisement.description}}
-        <br>
+          <div class="media-content" >
+            <nuxt-link :to="`/app/customer/advertisements/${advertisement.id}`">
+
+            </nuxt-link>
+          </div>
+        </div>
 
       </div>
       <div class="content">

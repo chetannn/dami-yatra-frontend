@@ -2,9 +2,7 @@
   <div v-if="$fetchState.pending">Loading...</div>
   <div v-else>
     <title-bar :title-stack="titleStack" />
-    <hero-bar>
-      Annapurna Trek
-    </hero-bar>
+
 <!--    <nav class="navbar has-shadow is-white">-->
 <!--      &lt;!&ndash; logo / brand &ndash;&gt;-->
 <!--      <div class="navbar-brand">-->
@@ -29,9 +27,9 @@
     <div class="section pt-4 pb-0">
       <nav class="breadcrumb has-arrow-separator">
         <ul class="container is-size-6">
-          <li><a class="has-text-grey">Techie Coffee</a></li>
-          <li><a class="has-text-grey">Shop</a></li>
-          <li class="is-active"><a>Docker Dark Roast</a></li>
+          <li><a class="has-text-grey">Home</a></li>
+          <li><a class="has-text-grey">Advertisements</a></li>
+          <li class="is-active"><a>{{ advertisement.title }}</a></li>
         </ul>
       </nav>
     </div>
@@ -49,11 +47,20 @@
           </div>
 
           <div class="column is-12-tablet is-4-desktop">
-            <h1 class="is-size-3-mobile is-size-1-desktop title">Docker</h1>
-            <h2 class="is-size-3-mobile is-size-2-desktop subtitle">Dark Roast</h2>
+            <h1 class="is-size-3-mobile is-size-1-desktop title">{{ advertisement.title }}</h1>
+
+              <nav class="breadcrumb has-bullet-separator px-0">
+                <ul class="container is-size-7 px-0">
+                  <li><a class="has-text-grey">City 1</a></li>
+                  <li><a class="has-text-grey">City 2</a></li>
+                  <li class="is-active"><a>City 3</a></li>
+                </ul>
+              </nav>
+            <p class="mb-4">By <span text-is-link>{{advertisement.vendor.name}}</span></p>
+
             <p class="mb-4">{{advertisement.description}}</p>
             <div class="is-size-4 mb-4">रु {{advertisement.price}}</div>
-            <p class="mb-4">By {{advertisement.vendor.name}}</p>
+
             <form>
 
               <div class="buttons">
@@ -80,11 +87,11 @@
 
           <div class="card">
             <div class="card-content">
-              <p class="title is-3">
+              <p class="subtitle is-3">
                 Highlights</p>
               <div class="media">
                 <div class="media-content">
-                  <p class="title is-4">
+                  <p class="subtitle is-4">
                     <b-icon
                       icon="calendar"
                       size="is-small">
@@ -93,7 +100,7 @@
                 </div>
 
                 <div class="media-content">
-                  <p class="title is-4">
+                  <p class="subtitle is-4">
                     <b-icon
                       icon="ticket"
                       size="is-small">
@@ -106,7 +113,7 @@
 
                 </div>
                 <div class="media-content">
-                  <p class="title is-4">
+                  <p class="subtitle is-4">
                     <b-icon
                       icon="bed-king"
                       size="is-small">
@@ -119,7 +126,7 @@
                 </div>
                 <div class="media-content">
 
-                  <p class="title is-4">
+                  <p class="subtitle is-4">
                     <b-icon
                       icon="food"
                       size="is-small">
@@ -132,7 +139,7 @@
                 </div>
                 <div class="media-content">
 
-                  <p class="title is-4">
+                  <p class="subtitle is-4">
                     <b-icon
                       icon="hiking"
                       size="is-small">
@@ -377,11 +384,11 @@ export default {
   methods: {
     purchase(advertisement) {
       this.$khalti({
-        amount: this.advertisement.amount * 100,
+        amount: this.advertisement.price * 100,
         eventHandler: {
           onSuccess: async (response) => {
             await this.$axios.post('/api/customer/pay', {
-              amount: this.advertisement.amount * 100,
+              amount: this.advertisement.price * 100,
               advertisement_id: advertisement.id,
               token: response.token
             });
