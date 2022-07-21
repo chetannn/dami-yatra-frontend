@@ -38,13 +38,13 @@ export default {
           {
             to: '/app/vendor/coupons',
             label: 'Coupons',
-            icon: 'table',
+            icon: 'ticket',
             // updateMark: true
           },
           {
             to: '/app/vendor/customer-payments',
             label: 'Customer Payments',
-            icon: 'table'
+            icon: 'credit-card-outline'
           },
           // {
           //   to: '/forms',
