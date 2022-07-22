@@ -17,7 +17,7 @@
           <div class="title is-4 mb-4">
             रु {{advertisement.price}}
           </div>
-          <div class="column px-0 is-6">
+          <div class="column px-0 is-12">
             {{advertisement.description}}
             <br>
           </div>
@@ -26,11 +26,12 @@
         <div class="column is-2">
           <div class="media-content">
             <figure class="image is-48x48">
-              <img :src="advertisement.vendor.user.profile_picture_url" :alt="advertisement.title">
+              <img :src="advertisement.vendor.user.profile_picture_url" :alt="advertisement.title" class="is-rounded">
             </figure>
             <div class="column is-12 px-0">
-              Sold by: </br> {{advertisement.vendor.user.name}}
-            </div>
+              <p class="subtitle is-6">
+                </br>
+                Sold by: </br> {{advertisement.vendor.user.name}}</p></div>
           </div>
 
           <div class="media-content" >
@@ -47,10 +48,10 @@
           <b-button type="is-info is-light" inverted  icon-left="eye">
             {{advertisement.clicks}}
           </b-button>
-          <b-button type="is-warning is-light" inverted icon-left="calendar-range">{{advertisement.purchased_by_count}}/{{advertisement.quantity}} Booked</b-button>
+          <b-button type="is-warning is-light" inverted icon-left="calendar-range">{{advertisement.purchased_by_count}}/{{advertisement.quantity}} </b-button>
 
-          <b-button  v-if="advertisement.is_favorite" type="is-primary" @click="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart">Remove Favorite</b-button>
-          <b-button  v-else type="is-primary" @click="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart-outline">Favorite</b-button>
+          <b-button  v-if="advertisement.is_favorite" type="is-primary" @click="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart"></b-button>
+          <b-button  v-else type="is-primary" @click="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart-outline"></b-button>
 
 
         </div>
