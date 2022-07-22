@@ -84,7 +84,7 @@
 
                 <div v-if="$fetchState.pending && advertisements.length === 0">Loading....</div>
 
-                        <div v-else :key="advertisement.id" v-for="advertisement in advertisements" class="column is-4">
+                        <nuxt-link :to="`/app/customer/advertisements/${advertisement.id}`" v-else :key="advertisement.id" v-for="advertisement in advertisements" class="column is-4">
               <div class="card large">
                 <div class="card-image">
                   <figure class="image is-16by9">
@@ -158,7 +158,7 @@
                 </div>
               </div>
 
-</div>
+</nuxt-link>
 <!--            </div>-->
 
 
