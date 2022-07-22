@@ -112,8 +112,7 @@ export default {
     },
     async getAll(params = {}) {
 
-      params.current_page = this.current_page
-      this.params = params
+      this.params = { ...this.params, ...params  }
 
       const qs = new URLSearchParams(this.params);
 
@@ -129,7 +128,9 @@ export default {
         container: null
       })
 
-      await this.getAll();
+      await this.getAll({
+        page: this.current_page
+      });
 
       loadingComponent.close()
     },

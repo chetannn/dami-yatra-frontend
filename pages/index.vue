@@ -4,7 +4,7 @@
 <nav class="navbar has-shadow is-white">
   <div class="navbar-brand>">
     <a class="navbar-item">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjsScWYmyfPv3XdkNdEFVJ1wlDKMOgcSWUcg&usqp=CAU" alt="logo" style="max-height:50px" class="py-2 px-2">
+    <img src="~/assets/DamiYatra.png" alt="logo" style="max-height:50px" class="py-2 px-2">
     </a>
     <a class="navbar-burger" id="burger">
       <span></span>
