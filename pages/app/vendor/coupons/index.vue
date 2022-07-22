@@ -23,7 +23,7 @@
       </b-table-column>
 
       <b-table-column field="expiration_date" label="Expiration Date" v-slot="props">
-        {{props.row.expiration_date}}
+        {{$dayjs(props.row.expiration_date).format('MMMM D, YYYY')}}
       </b-table-column>
 
       <b-table-column field="limit" label="Limit" v-slot="props">
