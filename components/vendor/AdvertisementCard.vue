@@ -59,7 +59,7 @@
         <div class="buttons">
           <b-button type="is-info is-light" inverted icon-left="airplane">{{advertisement.duration}}</b-button>
           <b-button type="is-info is-light" inverted  icon-left="eye">
-            0
+            {{advertisement.clicks}}
           </b-button>
           <b-button type="is-warning is-light" inverted icon-left="calendar-range">{{displayExpirationDate(advertisement.ad_end_date)}}</b-button>
           <b-button type="is-primary" icon-left="heart">{{advertisement.favorited_by_count}}</b-button>

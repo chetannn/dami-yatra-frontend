@@ -45,7 +45,7 @@
         <div class="buttons">
           <b-button type="is-info is-light" inverted icon-left="airplane">{{advertisement.duration}}</b-button>
           <b-button type="is-info is-light" inverted  icon-left="eye">
-            0
+            {{advertisement.clicks}}
           </b-button>
           <b-button type="is-warning is-light" inverted icon-left="calendar-range">{{advertisement.purchased_by_count}}/{{advertisement.quantity}} Booked</b-button>
 

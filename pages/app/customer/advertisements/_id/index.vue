@@ -477,6 +477,8 @@ export default {
     await this.getAll();
     // await this.getAdDetail()
 
+    await this.$axios.post(`/api/customer/advertisements/views/${this.$route.params.id}`)
+
     loadingComponent.close()
   },
 
