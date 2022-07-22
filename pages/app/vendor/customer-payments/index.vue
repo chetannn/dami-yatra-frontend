@@ -15,8 +15,16 @@
       {{props.row.advertisement.title}}
     </b-table-column>
 
-    <b-table-column field="price" label="Price" v-slot="props">
+    <b-table-column field="price" label="Total Amount with Tax" v-slot="props">
       {{props.row.total_amount_with_tax}}
+    </b-table-column>
+
+    <b-table-column field="taxable" label="Taxable Amount" v-slot="props">
+      {{props.row.taxable_amount}}
+    </b-table-column>
+
+    <b-table-column field="discount" label="Discount Amount" v-slot="props">
+      {{props.row.discount_amount}}
     </b-table-column>
 
     <b-table-column field="status" label="Status" v-slot="props">

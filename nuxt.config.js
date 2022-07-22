@@ -94,7 +94,8 @@ export default {
          url: process.env.BACKEND_URL,
          token: {
            property: 'token',
-           global: true
+           global: true,
+           maxAge: 3600
          },
          user: {
            property: false,

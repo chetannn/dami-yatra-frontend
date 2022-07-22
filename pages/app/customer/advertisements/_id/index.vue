@@ -60,7 +60,7 @@
             <div class="is-size-4 mb-4">रु {{advertisement.price}}</div>
 
            <b-field>
-             <b-input  placeholder="Coupon Code" />
+             <b-input  placeholder="Coupon Code" v-model="coupon" />
            </b-field>
 
             <form>
@@ -416,7 +416,9 @@ export default {
       message: '',
       activeTab: 0,
       favoriteLoading: false,
-      favorited: false
+      favorited: false,
+      coupon: '',
+      couponId: null,
     }
   },
   methods: {
@@ -429,15 +431,48 @@ export default {
         trapFocus: true
       })
     },
-    purchase(advertisement) {
+    async purchase() {
+      // verify coupon
+
+      let taxableAmount = 0;
+      let totalAmount = 0;
+      let discountAmount = 0;
+
+      if(this.coupon && this.coupon.length > 0) {
+        try {
+          const res =  await this.$axios.post('/api/customer/coupon-verification', {
+            advertisement_id: this.advertisement.id,
+            coupon_code: this.coupon
+          });
+
+          this.couponId = res.data.id
+
+          const discountRate = res.data.discount_rate
+          discountAmount = (this.advertisement.price * discountRate) / 100
+          taxableAmount = this.advertisement.price - discountAmount
+          totalAmount = taxableAmount + 0.13 * taxableAmount
+        }
+        catch (err) {
+
+        }
+
+      }
+      else {
+        taxableAmount = this.advertisement.price - discountAmount
+        totalAmount = taxableAmount + 0.13 * taxableAmount
+      }
+
       this.$khalti({
-        amount: this.advertisement.price * 100,
+        amount: totalAmount * 100,
         eventHandler: {
           onSuccess: async (response) => {
             await this.$axios.post('/api/customer/pay', {
-              amount: this.advertisement.price * 100,
-              advertisement_id: advertisement.id,
-              token: response.token
+              amount: totalAmount * 100,
+              discount_amount: discountAmount,
+              taxable_amount: taxableAmount,
+              advertisement_id: this.advertisement.id,
+              token: response.token,
+              coupon_id: this.couponId
             });
           }
         }
