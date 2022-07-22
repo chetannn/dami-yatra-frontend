@@ -10,21 +10,26 @@
         @click.prevent="asideToggleMobile"
       >
         <b-icon :icon="asideMobileIcon" />
+
       </a>
       <a
         class="navbar-item is-hidden-touch is-hidden-widescreen is-desktop-icon-only"
         @click.prevent="asideDesktopOnlyToggle"
       >
+
         <b-icon icon="menu" />
+
       </a>
-      <div class="navbar-item has-control no-left-space-touch no-left-space-desktop-only">
-        <div class="control">
-          <input
-            class="input"
-            placeholder="Search everywhere..."
-          >
-        </div>
-      </div>
+
+
+<!--      <div class="navbar-item has-control no-left-space-touch no-left-space-desktop-only">-->
+<!--        <div class="control">-->
+<!--          <input-->
+<!--            class="input"-->
+<!--            placeholder="Search everywhere..."-->
+<!--          >-->
+<!--        </div>-->
+<!--      </div>-->
     </div>
     <div class="navbar-brand is-right">
       <a
@@ -44,7 +49,7 @@
     >
       <div class="navbar-end">
 
-        <nav-bar-menu class="has-divider has-user-avatar">
+        <nav-bar-menu v-if="$auth.loggedIn" class="has-divider has-user-avatar">
           <user-avatar :avatar="$auth.user.profile_picture_url" />
           <div class="is-user-name">
             <span>{{ $auth.user.name }}</span>
@@ -93,6 +98,7 @@
 
 
         <a
+          v-if="$auth.loggedIn"
           class="navbar-item is-desktop-icon-only"
           title="Log out"
           @click="logout"
@@ -103,6 +109,14 @@
           />
           <span>Log out</span>
         </a>
+
+        <nuxt-link to="/login" v-if="!$auth.loggedIn" class="navbar-item">
+          Login
+        </nuxt-link>
+
+        <nuxt-link to="/register" v-if="!$auth.loggedIn" class="navbar-item">
+          Register
+        </nuxt-link>
       </div>
     </div>
   </nav>

@@ -1,41 +1,8 @@
 <template>
   <div class="op">
-  <section>
-<nav class="navbar has-shadow is-white">
-  <div class="navbar-brand>">
-    <a class="navbar-item">
-    <img src="~/assets/DamiYatra.png" alt="logo" style="max-height:50px" class="py-2 px-2">
-    </a>
-    <a class="navbar-burger" id="burger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </a>
-  </div>
 
-  <div class="navbar-menu" id="nav-links">
-    <div class="navbar-end">
-      <nuxt-link to="/login" class="navbar-item">Login</nuxt-link>
-      <nuxt-link to="/register" class="navbar-item">Register</nuxt-link>
+<nav-bar />
 
-    </div>
-  </div>
-</nav>
-  </section>
-
-  <section>
-<!--    Breadcrumb-->
-<!--<div class="section pt-4 pb-0">-->
-<!--  <nav class=" breadcrumb has-arrow-separator">-->
-<!--    <ul class="container is-size-6">-->
-<!--      <li><a class="has-text-grey">DamiYatra</a></li>-->
-<!--      <li><a class="has-text-grey">Advertisement</a></li>-->
-<!--      <li class="is-active"><a>Annapurna Base Camp</a></li>-->
-<!--    </ul>-->
-<!--  </nav>-->
-<!--</div>-->
-
-  </section>
 <section class="hero is-gray">
   <div class="hero-body">
     <div class="container has-text-centered">
