@@ -80,11 +80,15 @@
           </div>
           <div id="app" class="row columns is-multiline">
 <!--            <div v-for="card in cardData" key="card.id" class="column is-4">-->
-                        <div class="column is-4">
+
+
+                <div v-if="$fetchState.pending && advertisements.length === 0">Loading....</div>
+
+                        <div v-else :key="advertisement.id" v-for="advertisement in advertisements" class="column is-4">
               <div class="card large">
                 <div class="card-image">
                   <figure class="image is-16by9">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg" alt="Image">
+                    <img :src="advertisement.cover_image_url" alt="Image">
                   </figure>
                 </div>
                 <div class="card-content is-overlay">
@@ -100,32 +104,30 @@
 <!--                      </figure>-->
 <!--                    </div>-->
                     <div class="media-content">
-                      <p class="title is-4 ">Nagarkot Tour</p>
+                      <p class="title is-4 ">{{advertisement.title}}</p>
 
 
                         <p class="title has-text-link ">
-                          Rs 17,000
+                          Rs {{advertisement.price}}
                         </p>
 
                         <nav class=" breadcrumb has-arrow-separator">
                           <ul class="container is-size-7">
-                            <li><a class="has-text-grey">Kathmandu</a></li>
-                            <li><a class="has-text-grey">Changunarayan</a></li>
-                            <li class="is-active"><a>Nagarkot</a></li>
+                            <li :key="index" v-for="(city,index) in advertisement.major_cities" class="has-text-gray is-active"><a>{{city}}</a></li>
                           </ul>
                         </nav>
 
 
                     </div>
                     <div class="media-content">
-                      <span class="tag is-link">By Kharel Travles</span>
+                      <span class="tag is-link">By {{advertisement.vendor.name}}</span>
                       </div>
 
                   </div>
 
 
                   <div class="content">
-                    Nagarkot is a village in central Nepal, at the rim of the Kathmandu Valley. It’s known for its views of the Himalayas, including Mount Everest to the northeast, which are especially striking at sunrise and sunset. The surrounding scrubland is laced with trails and home to many butterflies.                    <div class="background-icon"><span class="icon-twitter"></span></div>
+                    {{advertisement.description}}
                   </div>
 
                   <div class="level">
@@ -136,7 +138,7 @@
                             icon="hiking"
                             size="is-medium"
                           type="is-link">
-                          </b-icon> 12/16
+                          </b-icon> {{advertisement.purchased_by_count}}/{{advertisement.quantity}}
                         </p>
                       </div>
                     </div>
@@ -148,7 +150,7 @@
                             icon="calendar"
                             size="is-medium"
                             type="">
-                          </b-icon> 12/16/2020
+                          </b-icon> {{$dayjs(advertisement.tour_start_date).format('MMMM D, YYYY')}}
                         </p>
                       </div>
                     </div>
@@ -240,7 +242,8 @@
 export default {
   data() {
     return {
-
+      advertisements: [],
+      foo: 'bar'
     }
   },
 
@@ -249,7 +252,11 @@ export default {
     clearIconClick() {
       this.place = '';
     }
-  }
+  },
+  async fetch() {
+    const response = await this.$axios.get(`/api/advertisements`)
+    this.advertisements = response.data.data
+  },
 }
 
 
