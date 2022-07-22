@@ -17,7 +17,7 @@
           <div class="title is-4 mb-4">
             रु {{advertisement.price}}
           </div>
-          <div class="column px-0 is-6">
+          <div class="column px-0 is-12">
             {{advertisement.description}}
             <br>
           </div>
