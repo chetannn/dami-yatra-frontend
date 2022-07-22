@@ -66,11 +66,9 @@
             <form>
 
               <div class="buttons">
-                <b-button
 
-                  type="is-warning"
-                  @click="downloadFile"
-                  icon-left="heart-outline" outlined/>
+                <b-button :loading="favoriteLoading"  v-if="favorited" type="is-warning" @click="toggleFavoriteAdvertisement" icon-left="heart"></b-button>
+                <b-button :loading="favoriteLoading" v-else type="is-warning" @click="toggleFavoriteAdvertisement" icon-left="heart-outline"></b-button>
                 <b-button
                   label="Itinerary"
                   type="is-link"
@@ -416,7 +414,9 @@ export default {
       discussions: [],
       advertisement: null,
       message: '',
-      activeTab: 0
+      activeTab: 0,
+      favoriteLoading: false,
+      favorited: false
     }
   },
   methods: {
@@ -447,6 +447,22 @@ export default {
     },
     downloadFile() {
       window.open(this.advertisement.itinerary_file_url, '_blank')
+    },
+    async toggleFavoriteAdvertisement() {
+      try {
+
+        this.favoriteLoading = true
+        await this.$axios.post('/api/customer/saved-advertisements/toggle', {
+          advertisement_id: this.advertisement.id
+        })
+
+        this.favoriteLoading = false
+        this.favorited = !this.favorited
+
+      }
+      catch (error) {
+
+      }
     },
     async postComment() {
       await this.$axios.post('/api/customer/advertisement-discussions', {
@@ -480,6 +496,8 @@ export default {
     await this.$axios.post(`/api/customer/advertisements/views/${this.$route.params.id}`)
 
     loadingComponent.close()
+
+    this.favorited = this.advertisement.favorited_by_count > 0
   },
 
   async fetch() {

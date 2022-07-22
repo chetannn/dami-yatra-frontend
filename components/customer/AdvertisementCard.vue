@@ -49,8 +49,8 @@
           </b-button>
           <b-button type="is-warning is-light" inverted icon-left="calendar-range">{{advertisement.purchased_by_count}}/{{advertisement.quantity}} Booked</b-button>
 
-          <b-button :loading="favoriteLoading" v-if="advertisement.is_favorite" type="is-primary" @click.self="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart">Remove Favorite</b-button>
-          <b-button :loading="favoriteLoading" v-else type="is-primary" @click.self="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart-outline">Favorite</b-button>
+          <b-button  v-if="advertisement.is_favorite" type="is-primary" @click="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart">Remove Favorite</b-button>
+          <b-button  v-else type="is-primary" @click="toggleFavoriteAdvertisement($event, advertisement)" icon-left="heart-outline">Favorite</b-button>
 
 
         </div>

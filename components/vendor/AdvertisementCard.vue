@@ -4,7 +4,7 @@
     <div class="card-content" >
       <div class="media">
         <div class="media-left" >
-          <nuxt-link :to="`/app/customer/advertisements/${advertisement.id}`">
+          <nuxt-link :to="`/app/vendor/advertisements/${advertisement.id}`">
             <figure class="image is-128x128">
               <img :src="advertisement.cover_image_url" :alt="advertisement.title">
             </figure>

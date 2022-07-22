@@ -44,11 +44,8 @@
             <form>
 
               <div class="buttons">
-                <b-button
+                <b-button type="is-primary" icon-left="heart">{{advertisement.favorited_by_count}}</b-button>
 
-                  type="is-warning"
-                  @click="downloadFile"
-                  icon-left="heart-outline" outlined/>
                 <b-button
                   label="Itinerary"
                   type="link"
