@@ -27,7 +27,7 @@ export default {
             label: 'Dashboard'
           }
         ],
-        'Examples',
+        'Mains',
         [
           {
             to: '/app/vendor/advertisements',
