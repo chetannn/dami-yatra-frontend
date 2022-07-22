@@ -10,14 +10,14 @@
           class="tile is-child"
           type="is-info"
           icon="account-multiple"
-          :number="512"
+          :number="customers"
           label="Customers"
         />
         <card-widget
           class="tile is-child"
           type="is-success"
           icon="cash"
-          :number="7770"
+          :number="revenue"
           prefix=""
           label="Revenue"
         />
@@ -29,33 +29,26 @@
 <!--          prefix="$"-->
 <!--          label="Total Tax"-->
 <!--        />-->
-        <card-widget
-          class="tile is-child"
-          type="is-success"
-          icon="chart-timeline-variant"
-          :number="256"
-          suffix="%"
-          label="Performance"
-        />
+
         <card-widget
           class="tile is-child"
           type="is-link"
           icon="ticket"
-          :number="256"
+          :number="coupons"
           label="Coupons"
         />
         <card-widget
           class="tile is-child"
           type="is-info"
           icon="eye"
-          :number="256"
+          :number="views"
           label="Views"
         />
         <card-widget
           class="tile is-child"
           type="is-success"
           icon="devices"
-          :number="256"
+          :number="activeAds"
           suffix=" ads"
           label="Active Ads"
         />
@@ -63,7 +56,7 @@
           class="tile is-child"
           type="is-danger"
           icon="monitor-off"
-          :number="256"
+          :number="expiredAds"
           suffix=" ads"
           label="Expired Ads"
         />
@@ -71,7 +64,7 @@
           class="tile is-child"
           type="is-warning"
           icon="monitor-edit"
-          :number="256"
+          :number="draftedAds"
           suffix=" ads"
           label="Draft Ads"
         />
@@ -79,7 +72,7 @@
           class="tile is-child"
           type="is-link"
           icon="monitor-star"
-          :number="256"
+          :number="featuredAds"
           suffix=" ads"
           label="Featured Ads"
         />
@@ -142,6 +135,14 @@ export default {
         chartData: null,
         extraOptions: chartConfig.chartOptionsMain,
       },
+      activeAds: 0,
+      coupons: 0,
+      customers: 0,
+      draftedAds: 0,
+      expiredAds: 0,
+      featuredAds: 0,
+      views: 0,
+      revenue: 0
     }
   },
   computed: {
@@ -149,12 +150,23 @@ export default {
       return ['Admin', 'Dashboard']
     },
   },
-  mounted() {
+  async mounted() {
     this.fillChartData()
     this.$buefy.snackbar.open({
       message: 'Welcome back',
       queue: false,
     })
+
+    const { data } = await this.$axios.get('/api/vendor/stats')
+    this.activeAds = data.activeAds
+    this.coupons = data.coupons
+    this.customers = data.customers
+    this.draftedAds = data.draftedAds
+    this.expiredAds = data.expiredAds
+    this.featuredAds = data.featuredAds
+    this.views = parseInt(data.views)
+    this.revenue = data.revenue.total
+
   },
   methods: {
     randomChartData(n) {

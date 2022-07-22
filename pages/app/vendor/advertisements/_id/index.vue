@@ -213,64 +213,6 @@
       </div>
     </section>
 
-
-    <!-- cards -->
-    <section class="section is-hidden-mobile">
-      <div class="container">
-        <h3 class="title has-text-centered is-size-4">Related Products</h3>
-        <div class="columns mt-5 is-8 is-variable is-centered">
-          <div class="column is-4-tablet is-3-desktop">
-            <div class="card">
-              <div class="card-image has-text-centered px-6">
-                <img src="" alt="product">
-              </div>
-              <div class="card-content">
-                <p>रु1339</p>
-                <p class="title is-size-5">Ghorepani</p>
-              </div>
-              <footer class="card-footer">
-                <p class="card-footer-item">
-                  <a href="" class="has-text-grey">View Package</a>
-                </p>
-              </footer>
-            </div>
-          </div>
-          <div class="column is-4-tablet is-3-desktop">
-            <div class="card">
-              <div class="card-image has-text-centered px-6">
-                <img src="" alt="product">
-              </div>
-              <div class="card-content">
-                <p>रु1339</p>
-                <p class="title is-size-5">Dhampus</p>
-              </div>
-              <footer class="card-footer">
-                <p class="card-footer-item">
-                  <a href="" class="has-text-grey">View Package</a>
-                </p>
-              </footer>
-            </div>
-          </div>
-          <div class="column is-4-tablet is-3-desktop">
-            <div class="card">
-              <div class="card-image has-text-centered px-6">
-                <img src="" alt="product">
-              </div>
-              <div class="card-content">
-                <p>रु1339</p>
-                <p class="title is-size-5">Nagarkot</p>
-              </div>
-              <footer class="card-footer">
-                <p class="card-footer-item">
-                  <a href="" class="has-text-grey">View Package</a>
-                </p>
-              </footer>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- modal -->
     <div class="modal is-dark">
       <div class="modal-background"></div>

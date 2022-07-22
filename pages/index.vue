@@ -166,13 +166,7 @@
                     type="is-link">
                   </b-icon>
                 </a>
-                <a class="mr-3 is-inline-block" href="#">
-                  <b-icon
-                    icon="git"
-                    size="is-medium"
-                    type="is-link">
-                  </b-icon>
-                </a>
+
                 <a class="mr-3 is-inline-block" href="#">
                   <b-icon
                     icon="facebook"
