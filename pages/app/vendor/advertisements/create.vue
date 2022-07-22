@@ -97,7 +97,7 @@
            <div class="columns is-three-quarters">
              <div class="column">
                <card-component title="Accommodations">
-                 <b-input v-model="accommodation" type="text" placeholder="Type accommodation" />
+                 <b-input v-model="accommodation" type="text" @keyup.native.enter="addAccommodation" placeholder="Type accommodation" />
                  <b-button class="mt-2" @click="addAccommodation" size="is-small" type="is-primary">Add</b-button>
                  <ul v-for="(accommodation, index) in accommodations" class="mt-4">
                    <li class="is-flex is-justify-content-space-between mb-2">
@@ -109,7 +109,7 @@
              </div>
              <div class="column">
                <card-component title="Activities">
-                  <b-input v-model="activity" type="text" placeholder="Type in the activity" />
+                  <b-input v-model="activity" @keyup.native.enter="addActivity" type="text" placeholder="Type in the activity" />
                    <b-button class="mt-2" @click="addActivity" size="is-small" type="is-primary">Add</b-button>
                      <ul v-for="(activity, index) in activities" class="mt-4">
                        <li class="is-flex is-justify-content-space-between mb-2">

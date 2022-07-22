@@ -247,54 +247,24 @@
       <div class="container">
         <h3 class="title has-text-centered is-size-4">Related Products</h3>
         <div class="columns mt-5 is-8 is-variable is-centered">
-          <div class="column is-4-tablet is-3-desktop">
+
+          <div :key="product.id" v-for="product in relatedProducts" class="column is-4-tablet is-3-desktop">
             <div class="card">
               <div class="card-image has-text-centered px-6">
-                <img src="" alt="product">
+                <img :src="product.cover_image_url" alt="product">
               </div>
               <div class="card-content">
-                <p>रु1339</p>
-                <p class="title is-size-5">Ghorepani</p>
+                <p>रु {{product.price}}</p>
+                <p class="title is-size-5">{{product.title}}</p>
               </div>
               <footer class="card-footer">
                 <p class="card-footer-item">
-                  <a href="" class="has-text-grey">View Package</a>
+                  <nuxt-link :to="`/app/customer/advertisements/${product.id}`" class="has-text-grey">View Package</nuxt-link>
                 </p>
               </footer>
             </div>
           </div>
-          <div class="column is-4-tablet is-3-desktop">
-            <div class="card">
-              <div class="card-image has-text-centered px-6">
-                <img src="" alt="product">
-              </div>
-              <div class="card-content">
-                <p>रु1339</p>
-                <p class="title is-size-5">Dhampus</p>
-              </div>
-              <footer class="card-footer">
-                <p class="card-footer-item">
-                  <a href="" class="has-text-grey">View Package</a>
-                </p>
-              </footer>
-            </div>
-          </div>
-          <div class="column is-4-tablet is-3-desktop">
-            <div class="card">
-              <div class="card-image has-text-centered px-6">
-                <img src="" alt="product">
-              </div>
-              <div class="card-content">
-                <p>रु1339</p>
-                <p class="title is-size-5">Nagarkot</p>
-              </div>
-              <footer class="card-footer">
-                <p class="card-footer-item">
-                  <a href="" class="has-text-grey">View Package</a>
-                </p>
-              </footer>
-            </div>
-          </div>
+
         </div>
       </div>
     </section>
@@ -419,6 +389,7 @@ export default {
       favorited: false,
       coupon: '',
       couponId: null,
+      relatedProducts: []
     }
   },
   methods: {
@@ -538,6 +509,9 @@ export default {
     // await this.getAdDetail()
 
     await this.$axios.post(`/api/customer/advertisements/views/${this.$route.params.id}`)
+
+   const resp = await this.$axios.get('/api/customer/related-products');
+    this.relatedProducts = resp.data
 
     loadingComponent.close()
 

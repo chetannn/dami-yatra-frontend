@@ -29,9 +29,9 @@
         </b-table-column>
 
 
-        <b-table-column custom-key="actions" label="Actions" v-slot="props">
-          <b-button type="is-primary">View Receipt</b-button>
-        </b-table-column>
+<!--        <b-table-column custom-key="actions" label="Actions" v-slot="props">-->
+<!--          <b-button type="is-primary">View Receipt</b-button>-->
+<!--        </b-table-column>-->
 
       </b-table>
 

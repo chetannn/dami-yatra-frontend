@@ -13,7 +13,7 @@
             <p class="control is-expanded">
 
               <b-field>
-                <b-input  placeholder="Search Places" type="search"  icon="magnify"
+                <b-input v-model="keyword" placeholder="Search" type="search" @keyup.native.enter="search" icon="magnify"
                          icon-right-clickable @icon-right-click="clearIconClick" rounded></b-input>
               </b-field>
             </p>
@@ -126,6 +126,18 @@
               </div>
 
 </nuxt-link>
+
+            <b-pagination
+              :total="total"
+              v-model="current_page"
+              :per-page="per_page"
+              aria-next-label="Next page"
+              aria-previous-label="Previous page"
+              aria-page-label="Page"
+              aria-current-label="Current page"
+              @change="onPageChange"
+             >
+            </b-pagination>
 <!--            </div>-->
 
 
@@ -210,7 +222,10 @@ export default {
   data() {
     return {
       advertisements: [],
-      foo: 'bar'
+      current_page: 1,
+      per_page: 6,
+      total: 0,
+      keyword: ''
     }
   },
 
@@ -218,11 +233,22 @@ export default {
   methods: {
     clearIconClick() {
       this.place = '';
-    }
+    },
+
+    onPageChange() {
+      this.$fetch()
+    },
+    search() {
+      this.$fetch()
+    },
   },
+
   async fetch() {
-    const response = await this.$axios.get(`/api/advertisements`)
+    const response = await this.$axios.get(`/api/advertisements?page=${this.current_page}&keyword=${this.keyword}`)
     this.advertisements = response.data.data
+    this.current_page = response.data.current_page
+    this.per_page = response.data.per_page
+    this.total = response.data.total
   },
 }
 
