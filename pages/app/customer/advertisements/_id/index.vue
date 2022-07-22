@@ -466,7 +466,7 @@ export default {
         amount: totalAmount * 100,
         eventHandler: {
           onSuccess: async (response) => {
-            await this.$axios.post('/api/customer/pay', {
+           let res = await this.$axios.post('/api/customer/pay', {
               amount: totalAmount * 100,
               discount_amount: discountAmount,
               taxable_amount: taxableAmount,
@@ -474,6 +474,15 @@ export default {
               token: response.token,
               coupon_id: this.couponId
             });
+
+            this.$buefy.notification.open({
+              type: 'is-success',
+              position: 'is-top',
+              message: res.data.message,
+              queue: false,
+              duration: 2000,
+              closable: false
+            })
           }
         }
 
